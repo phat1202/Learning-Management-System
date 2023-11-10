@@ -31,11 +31,17 @@ namespace Learning_Management_System.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsStudent")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsTeacher")
@@ -46,6 +52,9 @@ namespace Learning_Management_System.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -93,6 +102,7 @@ namespace Learning_Management_System.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CategoryName")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("CategoryId");
@@ -113,6 +123,7 @@ namespace Learning_Management_System.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<int?>("CourseId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("TotalNumberOfLesson")
@@ -120,37 +131,45 @@ namespace Learning_Management_System.Migrations
 
                     b.HasKey("ChapterId");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Chapters");
                 });
 
             modelBuilder.Entity("Learning_Management_System.Models.Course", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("CourseDescription")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CourseTitle")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DateCompleted")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("DateExpired")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<DateTime?>("DateStarted")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("longtext");
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -165,6 +184,7 @@ namespace Learning_Management_System.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("CourseId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCompleted")
@@ -175,51 +195,9 @@ namespace Learning_Management_System.Migrations
 
                     b.HasKey("LessonId");
 
+                    b.HasIndex("CourseId");
+
                     b.ToTable("Lessons");
-                });
-
-            modelBuilder.Entity("Learning_Management_System.Models.Student", b =>
-                {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("StudentId");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("Learning_Management_System.Models.Teacher", b =>
-                {
-                    b.Property<string>("TeacherId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("TeacherId");
-
-                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -350,6 +328,47 @@ namespace Learning_Management_System.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Learning_Management_System.Models.Chapter", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Course", "course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("course");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.Course", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.CategoryCourse", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Learning_Management_System.Models.ApplicationUser", "Teacher")
+                        .WithOne("course")
+                        .HasForeignKey("Learning_Management_System.Models.Course", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.Lesson", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Course", "course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("course");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -399,6 +418,11 @@ namespace Learning_Management_System.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("course");
                 });
 #pragma warning restore 612, 618
         }

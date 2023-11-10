@@ -6,6 +6,7 @@ namespace Learning_Management_System.Models
     {
         [Key]
         public int? CategoryId { get; set; }
+        [Required]
         public string? CategoryName { get; set; } //Back-end, Finance,...
     }
 }

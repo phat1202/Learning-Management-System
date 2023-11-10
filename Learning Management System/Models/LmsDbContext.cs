@@ -11,8 +11,8 @@ namespace Learning_Management_System.Models
         }
         public LmsDbContext(DbContextOptions<LmsDbContext> options) : base(options) { }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
+        //public DbSet<Student> Students { get; set; }
+        //public DbSet<Teacher> Teachers { get; set; }
         public DbSet<CategoryCourse> CategoryCourses { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Chapter> Chapters {  get; set; }

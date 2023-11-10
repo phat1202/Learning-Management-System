@@ -1,0 +1,51 @@
+﻿@using static Learning_Management_System.Models.ApplicationUser;
+@model Learning_Management_System.Repositories.ModelRepositories.RegisterModel
+@{
+
+    ViewData["Title"] = "Register Account";
+}
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <section>
+                <form asp-action="Register" method="post">
+                    <h2>Register</h2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="UserName" />
+                        <label asp-for="UserName" class="form-label">UserName</label>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="UserName" />
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Password" class="form-label">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="ConfirmPassword" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                        <label asp-for="ConfirmPassword" class="form-label">Password</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" value="Apply" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
