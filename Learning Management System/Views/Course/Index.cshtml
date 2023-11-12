@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Index";
     SignInManager.IsSignedIn(User);
+    int num = 0;
 }
 
 <h1>Index</h1>
@@ -12,10 +13,11 @@
     <a asp-action="CreateCourse" asp-route-userId="@User.Claims.First().Value">Create New</a>
 </p>
 
-<span class="alert-danger">@Html.ValidationSummary()</span>
+
 <table class="table">
     <thead>
         <tr>
+            <td>#</td>
             <td>CourseTitle </td>
             <td>CourseDescription</td>
             <td>Category</td>
@@ -31,15 +33,15 @@
         {
 
             <tr>
+                <td>@(++num)</td>
                 <td>@item.CourseTitle</td>
                 <td> @item.CourseDescription</td>
                 <td> @item.Category.CategoryName</td>
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.Teacher.Name)
                 </td>
                 <td>
+                    @* <a asp-action="MyClass" asp-route-userId="@User.Claims.First().Value" class="btn btn-primary">View My Course</a> *@
                     <a asp-action="RegisterCourse" asp-route-courseId="@item.CourseId" class="btn btn-primary">Register Course</a>
                     @*                     <a asp-action="Details" asp-route-id="@item.CourseId">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> *@

@@ -31,17 +31,11 @@ namespace Learning_Management_System.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsStudent")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsTeacher")
@@ -168,8 +162,7 @@ namespace Learning_Management_System.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasIndex("Id");
 
                     b.ToTable("Courses");
                 });
@@ -198,6 +191,31 @@ namespace Learning_Management_System.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Lessons");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.Student", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -348,8 +366,8 @@ namespace Learning_Management_System.Migrations
                         .IsRequired();
 
                     b.HasOne("Learning_Management_System.Models.ApplicationUser", "Teacher")
-                        .WithOne("course")
-                        .HasForeignKey("Learning_Management_System.Models.Course", "Id")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -365,6 +383,25 @@ namespace Learning_Management_System.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("course");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.Student", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Course", "course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Learning_Management_System.Models.ApplicationUser", "Learner")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Learner");
 
                     b.Navigation("course");
                 });
@@ -418,11 +455,6 @@ namespace Learning_Management_System.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Learning_Management_System.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("course");
                 });
 #pragma warning restore 612, 618
         }

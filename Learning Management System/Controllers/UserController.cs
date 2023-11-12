@@ -1,10 +1,12 @@
 ﻿using Learning_Management_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Learning_Management_System.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly LmsDbContext _context;
@@ -31,15 +33,24 @@ namespace Learning_Management_System.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             user.IsTeacher = true;
             await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult RegisterCourse(int courseId)
+        {                       //By Student
+
             return View();
         }
-        public async Task<IActionResult> MyCourse(string userId)
+        [HttpPost]
+        public async Task<IActionResult> RegisterCourse(Student user)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            var myCourses = await _context.Courses.Where(course => course.Id == userId)
-                                                  .ToListAsync();
-
-            return View(myCourses);
+            var student = new Student
+            {
+                Id = user.Id,
+                CourseId = user.CourseId,
+            };
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

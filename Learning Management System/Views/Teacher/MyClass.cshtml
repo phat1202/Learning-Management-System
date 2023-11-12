@@ -1,25 +1,26 @@
 ﻿@model IEnumerable<Learning_Management_System.Models.Course>
 
 @{
-    ViewData["Title"] = "MyCourseAsync";
+    ViewData["Title"] = "MyClass";
+    int num = 0;
 }
 
-<h1>MyCourseAsync</h1>
+<h1>MyClass</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table" >
+<table class="table">
     <thead>
         <tr>
+            <th>
+                #
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.CourseTitle)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CourseDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Teacher)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
@@ -36,14 +37,14 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @(++num)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CourseTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CourseDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teacher.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.CategoryName)

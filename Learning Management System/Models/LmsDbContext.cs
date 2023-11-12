@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Learning_Management_System.Models;
 
 namespace Learning_Management_System.Models
 {
@@ -17,6 +18,7 @@ namespace Learning_Management_System.Models
         public DbSet<Course> Courses { get; set; }
         public DbSet<Chapter> Chapters {  get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Student> Students { get; set; }
         //public DbSet<Test> Tests { get; set; }
         //public DbSet<TestScore> TestScores { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,5 +39,6 @@ namespace Learning_Management_System.Models
                 }
             }
         }
+        public DbSet<Learning_Management_System.Models.Student> Student { get; set; } = default!;
     }
 }

@@ -1,6 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@{
+    // var userName = @UserManager.Users.First();
+    var _signInManager = SignInManager.IsSignedIn(User);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,15 +30,38 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+@*                         <li class="nav-item">
+                            <select class="nav-link text-dark">
+                                <option class="form-control" value="" disabled selected>Select Category</option>
+                                <option class="form-control" value="category1">Category 1</option>
+                                <option class="form-control" value="category2">Category 2</option>
+                                <option class="form-control" value="category3">Category 3</option>
+                            </select>
                         </li>
+                        <li class="nav-item">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for anything">
+                            </div>
+                        </li> *@
                     </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="" title="Manage">My Learning</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="manage" class="nav-link text-dark" asp-controller="Home" asp-action="BecomeTeacher" title="Manage">Become Teacher</a>
+                        </li>
+                        @*
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" id="login" asp-controller="Identity" asp-action="Login">Log In</a>
+                        </li> *@
+                    </ul>
+
                     <ul class="navbar-nav">
-                        @if (SignInManager.IsSignedIn(User))
+                        @if (_signInManager == true)
                         {
                             <li class="nav-item">
-                                <a id="manage" class="nav-link text-dark" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                                <a id="manage" class="nav-link text-dark" title="Manage">Hello @UserManager.Users.First(u => u.Id == User.Claims.First().Value).Name!</a>
                             </li>
                             <li class="nav-item">
                                 <form id="logoutForm" class="form-inline" asp-controller="Identity" asp-action="Logout"  >
@@ -52,6 +79,7 @@
                             </li>
                         }
                     </ul>
+
                 </div>
             </div>
         </nav>

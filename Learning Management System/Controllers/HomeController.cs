@@ -1,4 +1,5 @@
 ﻿using Learning_Management_System.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,12 +18,20 @@ namespace Learning_Management_System.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
         }
+        public IActionResult BecomeTeacher()
+        {
+            return View();
+        }
+        public IActionResult Course()
+        {
 
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
