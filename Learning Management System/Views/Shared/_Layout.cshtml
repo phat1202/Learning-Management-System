@@ -48,9 +48,28 @@
                         <li class="nav-item">
                             <a id="manage" class="nav-link text-dark" asp-controller="User" asp-action="" title="Manage">My Learning</a>
                         </li>
-                        <li class="nav-item">
-                            <a id="manage" class="nav-link text-dark" asp-controller="Home" asp-action="BecomeTeacher" title="Manage">Become Teacher</a>
-                        </li>
+                        @if(_signInManager == true)
+                        {
+                            if (UserManager.Users.First(u => u.Id == User.Claims.First().Value).IsTeacher == true)
+                            {
+                                <li class="nav-item">
+                                    <a id="manage" class="nav-link text-dark" asp-route-userId="@User.Claims.First().Value" asp-controller="Teacher" asp-action="MyClass" title="Manage">My Courses</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a id="manage" class="nav-link text-dark" asp-controller="Home" asp-action="BecomeTeacher" title="Manage">Become Teacher</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a id="manage" class="nav-link text-dark" asp-controller="Home" asp-action="BecomeTeacher" title="Manage">Become Teacher</a>
+                            </li>
+                        }
+
                         @*
                         <li class="nav-item">
                         <a class="nav-link text-dark" id="login" asp-controller="Identity" asp-action="Login">Log In</a>

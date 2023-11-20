@@ -1,14 +1,18 @@
-﻿@model IEnumerable<Learning_Management_System.Models.Course>
-
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<Learning_Management_System.Models.Course>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "MyClass";
     int num = 0;
+    var _signInManager = SignInManager.IsSignedIn(User);
 }
 
 <h1>MyClass</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateCourse" asp-controller="Course" 
+    asp-route-userId="@User.Claims.First().Value">Create New Course</a>
 </p>
 <table class="table">
     <thead>
@@ -56,11 +60,10 @@
                 @Html.DisplayFor(modelItem => item.DateCompleted)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+                    <a asp-action="CourseManagement" asp-route-courseId="@item.CourseId">Management</a> 
             </td>
         </tr>
+
 }
     </tbody>
 </table>
