@@ -25,6 +25,7 @@ namespace Learning_Management_System.Controllers
                                                   .ToListAsync();
             return View(myCourses);
         }
+        //Index trong lesson
         public IActionResult CourseManagement(int courseId)
         {
             var chapters = _context.Chapters.Where(c => c.CourseId == courseId).ToList();

@@ -5,7 +5,10 @@
 }
 
 <h1>CourseManagement</h1>
-
+<p>
+    <a asp-action="" asp-controller="Course"
+       asp-route-userId="@User.Claims.First().Value">Add Lesson</a>
+</p>
 
 <table class="table">
     <thead>
