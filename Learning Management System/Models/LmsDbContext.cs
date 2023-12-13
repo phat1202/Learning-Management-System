@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Learning_Management_System.Models;
+using Microsoft.Extensions.Hosting;
+using Learning_Management_System.Extensions;
 
 namespace Learning_Management_System.Models
 {
-    public class LmsDbContext : IdentityDbContext<ApplicationUser>
+    public class LmsDbContext : DbContext
     {
         public LmsDbContext()
         {
 
         }
         public LmsDbContext(DbContextOptions<LmsDbContext> options) : base(options) { }
-
-        //public DbSet<Student> Students { get; set; }
-        //public DbSet<Teacher> Teachers { get; set; }
         public DbSet<CategoryCourse> CategoryCourses { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Chapter> Chapters {  get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<Student> Students { get; set; }
-        //public DbSet<Test> Tests { get; set; }
-        //public DbSet<TestScore> TestScores { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<StudentProgress> StudentProgresses { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
@@ -30,15 +28,18 @@ namespace Learning_Management_System.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                var tableName = entityType.GetTableName();
-                if (tableName.StartsWith("AspNet"))
-                {
-                    entityType.SetTableName(tableName.Substring(6));
-                }
-            }
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+            modelBuilder.Entity<User>().HasData(
+                 new User { UserId = "1", UserName = "firstStudent", Email = "firstStudent@gmail.com", Password = "firstStudent".Hash(), IsStudent = true },
+                 new User { UserId = "2", UserName = "firstTeacher", Email = "firstTeacher@gmail.com", Password = "firstTeacher".Hash(), IsTeacher = false });
+            modelBuilder.Entity<CategoryCourse>().HasData(
+                new CategoryCourse { CategoryId = 1, CategoryName ="Web Developement"}
+                );
+            modelBuilder.Entity<Course>().HasData(
+                new Course { CourseId = 1, CourseTitle = "ASP.NET Core", CourseDescription = "C#, SQL, EntityFramework",TeacherId = "2", CategoryId = 1 }
+    );
         }
-        public DbSet<Learning_Management_System.Models.Student> Student { get; set; } = default!;
     }
 }

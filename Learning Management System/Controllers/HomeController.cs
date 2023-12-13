@@ -1,6 +1,6 @@
 ﻿using Learning_Management_System.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Learning_Management_System.Controllers
@@ -8,29 +8,40 @@ namespace Learning_Management_System.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly LmsDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, LmsDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
-
+        //EndUser Controller
         public IActionResult Index()
         {
             return View();
         }
-        [Authorize]
+        public IActionResult About()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
         }
-        public IActionResult BecomeTeacher()
+        public IActionResult ViewCourseIndex()
         {
-            return View();
+            var result = _context.Courses.Include(n => n.Teacher)
+                                         .Include(c => c.Category)
+                                         .ToList();
+            return View(result);
         }
-        public IActionResult Course()
+        public IActionResult ViewTeacherIndex()
         {
-
-            return View();
+            var result = _context.Courses.Where(course => course.Teacher.IsTeacher == true)
+                                        .Include(u => u.Teacher)
+                                        .Include(c => c.Category)
+                                        .ToList();
+            return View(result);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

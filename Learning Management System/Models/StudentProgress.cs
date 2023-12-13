@@ -1,15 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Learning_Management_System.Models
 {
     public class StudentProgress
     {
-        //[ForeignKey(nameof(Student.StudentId))]
-        //public string? StudentId { get; set; }
-        //[ForeignKey(nameof(Course.CourseId))]
-        //public int? CourseId { get; set; }
-        //public int? TotalActivity { get; set; }
-        //public int? TotalLessonIsCompleted { get; set; } // Check in Lesson.IsCompleted == True => Get (+1)
-        //public double? ProgressPercentage { get; set; } //  (TotalLesson / TotalActivity) * 100 =>   x%
+        [Key]
+        public int? ProgressId { get; set; }
+
+        [Required]
+        public string? UserId { get; set; }
+
+        [Required]
+        public int? LessonId { get; set; }
+
+        public string? CompletionStatus { get; set; }
+
+        public int? Score { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime LastAccessed { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public User? user { get; set; }
+        [ForeignKey(nameof(LessonId))]
+        public Lesson? lesson { get; set; }
     }
 }

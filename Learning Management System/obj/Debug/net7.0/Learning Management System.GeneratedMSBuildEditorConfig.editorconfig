@@ -16,16 +16,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Course/CreateCourse.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXENyZWF0ZUNvdXJzZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Course/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/BecomeTeacher.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCZWNvbWVUZWFjaGVyLmNzaHRtbA==
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/Index.cshtml]
@@ -36,48 +28,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Identity/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSWRlbnRpdHlcSW5kZXguY3NodG1s
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/ViewCourseIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWaWV3Q291cnNlSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Identity/LogIn.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSWRlbnRpdHlcTG9nSW4uY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Identity/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSWRlbnRpdHlcUmVnaXN0ZXIuY3NodG1s
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/ViewTeacherIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWaWV3VGVhY2hlckluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Shared/_FooterCustom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXJDdXN0b20uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Shared/_LayoutCustom.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRDdXN0b20uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CourseManagement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDb3Vyc2VNYW5hZ2VtZW50LmNzaHRtbA==
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/User/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CreateChapter.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDcmVhdGVDaGFwdGVyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/MyClass.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxNeUNsYXNzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/User/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/User/RegisterCourse.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxSZWdpc3RlckNvdXJzZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/User/RegisterTeacher.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxSZWdpc3RlclRlYWNoZXIuY3NodG1s
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/User/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/_ViewImports.cshtml]

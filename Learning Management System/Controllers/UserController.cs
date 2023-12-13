@@ -1,56 +1,130 @@
-﻿using Learning_Management_System.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Learning_Management_System.Repositories.AccountRepository;
+using Learning_Management_System.Extensions;
+using Learning_Management_System.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Learning_Management_System.Controllers
 {
-    [Authorize]
     public class UserController : Controller
     {
+
         private readonly LmsDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        public UserController(LmsDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserController(LmsDbContext context)
         {
+
             _context = context;
-            _userManager = userManager;
-            _signInManager = signInManager;
         }
+
         public IActionResult Index()
         {
-            var list_user = _userManager.Users.ToList();
-            return View(list_user);
+            return View();
         }
-        public IActionResult RegisterTeacher()
+        public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> RegisterTeacher(string userId)
+        public async Task<IActionResult> Login(LoginModel objLoginModel)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            user.IsTeacher = true;
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult RegisterCourse(int courseId)
-        {                       //By Student
-
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> RegisterCourse(Student user)
-        {
-            var student = new Student
+            if (ModelState.IsValid)
             {
-                Id = user.Id,
-                CourseId = user.CourseId,
-            };
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == objLoginModel.Email && x.Password == objLoginModel.Password.Hash());
+                if (user != null)
+                {
+                    var claims = new List<Claim>() {
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim("UserId", user.UserId),
+                        new Claim(ClaimTypes.Role, ((EnumClass.Role)user.Role).ToString() )
+                        //new Claim(ClaimTypes.Role, role.role.RoleName)
+                    };
+
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
+                    {
+                        IsPersistent = objLoginModel.RememberLogin
+                    });
+                    var lastRequestURL = HttpContext.Session.GetString(TextConstant.LastRequestURL);
+                    if (string.IsNullOrEmpty(lastRequestURL))
+                    {
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        return Redirect(lastRequestURL);
+                    }
+
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid Credential";
+                    return View(user);
+                }
+            }
+            return View(objLoginModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterModel model)
+        {
+            try
+            {
+                if (model.Email != null)
+                {
+                    var error = new ErrorViewModel();
+                    var userExisting = _context.Users.FirstOrDefault(x => x.Email!.Trim().ToLower() == model.Email.Trim().ToUpper() && !x.IsDeleted);
+                    if (userExisting != null)
+                    {
+                        throw new Exception("Email này đã tồn tại!");
+                    }
+                    if (ModelState.IsValid)
+                    {
+                        var user = new User
+                        {
+                            UserName = model.UserName,
+                            Email = model.Email.Trim().ToUpper(),
+                            Password = model.Password.Hash(),
+                            Role = (int)EnumClass.Role.User,
+                            Gender = model.Gender,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsTeacher = false,
+                            IsStudent = false,
+                            CreatedAt = DateTime.Now,
+                            UpdatedAt = DateTime.Now,
+                        };
+                        _context.Add(user);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        model.ErrorMessage = "Lỗi khi tạo tài khoản";
+                        return View(model);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                model.ErrorMessage = "Lỗi khi tạo tài khoản";
+                return View(model);
+            }
+            return View();
         }
     }
 }

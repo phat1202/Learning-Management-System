@@ -12,26 +12,20 @@ namespace Learning_Management_System.Models
         public string? CourseTitle { get; set; } // HTML, Python, C#, Tài Xỉu, Poker, Blackjack
         [Required]
         public string? CourseDescription { get; set; }
-        public string? Id { get; set; }
+        public string? TeacherId { get; set; }
 
-        [ForeignKey(nameof(ApplicationUser.Id))]
+        [ForeignKey(nameof(TeacherId))]
         [Required]
-        public ApplicationUser? Teacher { get; set; }
+        public User? Teacher { get; set; }
         public int? CategoryId { get; set; } //Front-End, Back-end, Finance
         [ForeignKey("CategoryId")]
         [Required]
-        public CategoryCourse? Category { get; set; }
-        public DateTime? DateStarted { get; set; } // Start when registered
-        public DateTime? DateCompleted { get; set; }
-        
-
-       
+        public CategoryCourse? Category { get; set; }        
     }
     public class Chapter
     {
         [Key]
         public int? ChapterId { get; set; }
-        public int? ChapterNumber { get; set; }
         public string? ChapterTitle { get; set; }
         public int? CourseId { get; set; }
         [ForeignKey("CourseId")]
@@ -45,13 +39,10 @@ namespace Learning_Management_System.Models
         [Key]
         public int? LessonId { get; set; }
         public string? LessonName { get; set; }
-        [ForeignKey(nameof(Chapter.ChapterId))]
         public int? ChapterId { get; set; }
+        [ForeignKey(nameof(Chapter.ChapterId))]
+        public Chapter? chapter { get; set; }
 
-        public int? CourseId { get; set; }
-        [ForeignKey("CourseId")]
-        [Required]
-        public Course? course { get; set; }
         [DefaultValue(false)]
         public bool IsCompleted { get; set; }
     }
