@@ -149,8 +149,10 @@ namespace Learning_Management_System.Controllers
             var user = _context.Users.FirstOrDefault(u => u.UserId == userEditProfile.UserId);
             if (user == null)
             {
-                string errorMessage = "Thay đổi không thành công";
-                return Json(new { success = false, message = errorMessage });
+                //string errorMessage = "Thay đổi không thành công";
+                //return Json(new { success = false, message = errorMessage });
+                ModelState.AddModelError("EditError", "Thay đổi không thành công");
+                return View(user);
             }
             //var newProfile = new User
             //{
@@ -161,8 +163,16 @@ namespace Learning_Management_System.Controllers
             user.UserName = userEditProfile.UserName;
             user.DateOfBirth = userEditProfile.DateOfBirth;
             _context.SaveChanges();
-            string Message = "Thay đổi thành công.";
             return View(user);
+        }
+        public IActionResult MyLearning(string userId)
+        {
+            var result = _context.Enrollments.Where(learnings => learnings.UserId == userId)
+                .Include(c => c.course.Teacher)
+                .Include(u => u.user)
+                .ToList();
+
+            return View(result);
         }
     }
 }
