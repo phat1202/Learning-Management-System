@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>ECOURSES - Online Courses HTML Template</title>
+    <title>LMS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -17,12 +17,13 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="container-fluid d-none d-lg-block">
@@ -99,8 +100,12 @@
                         <div class="navbar-nav py-0">
                             <a href="#" class="nav-item nav-link active">Home</a>
                             <a asp-action="About" asp-controller="Home" class="nav-item nav-link">About</a>
-                            <a asp-action="ViewCourseIndex" asp-controller="Home" class="nav-item nav-link">Courses</a>
+                            <a asp-action="ViewCategoryCourseIndex" asp-controller="Home" class="nav-item nav-link">Courses</a>
                             <a asp-action="ViewTeacherIndex" asp-controller="Home" class="nav-item nav-link">Teachers</a>
+                            <a href="#" class=" nav-item nav-link">
+                                <i class="far fa-bell"></i>
+                            </a>
+
                             @*                             <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blog</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -112,7 +117,30 @@
                         </div>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="LogOut" asp-controller="User" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Log Out</a>
+                            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+                            var userIdValue = userIdClaim != null ? userIdClaim.Value.Replace("UserId:", "") : null;
+
+                            @*  *@
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    <img src="~/img/avatar.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
+                                </a>
+                               
+
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a asp-action="UserProfile" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">Your Profile</a>
+                                    <a asp-action="Logout" asp-controller="User" class="dropdown-item">Log Out</a>
+
+                                </div>
+                            </div>
+
+                            @* <div class="nav-item dropdown">
+                        <img src="~/img/avatar.png" class="profile-pic">
+                        <div class="dropdown-menu rounded-0 m-0">
+                        <a asp-action="Register" asp-controller="User" class="dropdown-item">Sign Up</a>
+                        <a asp-action="Login" asp-controller="User" class="dropdown-item">Sign In</a>
+                        </div>
+                        </div> *@
                         }
                         else
                         {
@@ -159,5 +187,16 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @*     <script>
+    document.querySelectorAll('.dropdown-toggle').forEach(item => {
+    item.addEventListener('click', event => {
+    if (event.target.classList.contains('dropdown-toggle')) {
+    event.target.classList.toggle('toggle-change');
+    } else if (event.target.parentElement.classList.contains('dropdown-toggle')) {
+    event.target.parentElement.classList.toggle('toggle-change');
+    }
+    });
+    });
+    </script> *@
 </body>
 </html>

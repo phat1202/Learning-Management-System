@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\img\\about.jpg"
     },
     {
+      "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\img\\avatar.png",
+      "PackagePath": "staticwebassets\\img\\avatar.png"
+    },
+    {
       "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\img\\blog-1.jpg",
       "PackagePath": "staticwebassets\\img\\blog-1.jpg"
     },

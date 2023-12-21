@@ -7,6 +7,7 @@ using Learning_Management_System.Repositories.AccountRepository;
 using Learning_Management_System.Extensions;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Identity;
+using Learning_Management_System.EndUserModels;
 
 namespace Learning_Management_System.Controllers
 {
@@ -26,6 +27,7 @@ namespace Learning_Management_System.Controllers
         }
         public IActionResult Login()
         {
+            HttpContext.Session.SetString("ReturnUrl", Request.Headers["Referer"].ToString());
             return View();
         }
         [HttpPost]
@@ -37,11 +39,10 @@ namespace Learning_Management_System.Controllers
                 if (user != null)
                 {
                     var claims = new List<Claim>() {
+                        new Claim("UserId", user.UserId),
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.Email, user.Email),
-                        new Claim("UserId", user.UserId),
-                        new Claim(ClaimTypes.Role, ((EnumClass.Role)user.Role).ToString() )
-                        //new Claim(ClaimTypes.Role, role.role.RoleName)
+                        new Claim(ClaimTypes.Role, ((EnumClass.Role)user.Role).ToString())
                     };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -50,14 +51,15 @@ namespace Learning_Management_System.Controllers
                     {
                         IsPersistent = objLoginModel.RememberLogin
                     });
-                    var lastRequestURL = HttpContext.Session.GetString(TextConstant.LastRequestURL);
-                    if (string.IsNullOrEmpty(lastRequestURL))
+                    var returnUrl = HttpContext.Session.GetString("ReturnUrl");
+                    HttpContext.Session.Remove("ReturnUrl");
+                    if (string.IsNullOrEmpty(returnUrl))
                     {
                         return Redirect("/");
                     }
                     else
                     {
-                        return Redirect(lastRequestURL);
+                        return Redirect(returnUrl);
                     }
 
                 }
@@ -69,11 +71,20 @@ namespace Learning_Management_System.Controllers
             }
             return View(objLoginModel);
         }
-        [HttpPost]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.SetString("ReturnUrl", Request.Headers["Referer"].ToString());
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
+            var returnUrl = HttpContext.Session.GetString("ReturnUrl");
+            HttpContext.Session.Remove("ReturnUrl");
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return Redirect("/");
+            }
+            else
+            {
+                return Redirect(returnUrl);
+            }
         }
         public IActionResult Register()
         {
@@ -91,6 +102,7 @@ namespace Learning_Management_System.Controllers
                     if (userExisting != null)
                     {
                         throw new Exception("Email này đã tồn tại!");
+
                     }
                     if (ModelState.IsValid)
                     {
@@ -125,6 +137,32 @@ namespace Learning_Management_System.Controllers
                 return View(model);
             }
             return View();
+        }
+        public IActionResult UserProfile(string userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult UserProfile(User userEditProfile)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userEditProfile.UserId);
+            if (user == null)
+            {
+                string errorMessage = "Thay đổi không thành công";
+                return Json(new { success = false, message = errorMessage });
+            }
+            //var newProfile = new User
+            //{
+            //    UserName = userEditProfile.UserName,
+            //    DateOfBirth = userEditProfile.DateOfBirth,
+
+            //};
+            user.UserName = userEditProfile.UserName;
+            user.DateOfBirth = userEditProfile.DateOfBirth;
+            _context.SaveChanges();
+            string Message = "Thay đổi thành công.";
+            return View(user);
         }
     }
 }

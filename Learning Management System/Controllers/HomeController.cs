@@ -28,7 +28,7 @@ namespace Learning_Management_System.Controllers
         {
             return View();
         }
-        public IActionResult ViewCourseIndex()
+        public IActionResult ViewCategoryCourseIndex()
         {
             var result = _context.Courses.Include(n => n.Teacher)
                                          .Include(c => c.Category)
@@ -41,6 +41,11 @@ namespace Learning_Management_System.Controllers
                                         .Include(u => u.Teacher)
                                         .Include(c => c.Category)
                                         .ToList();
+            return View(result);
+        }
+        public IActionResult ViewCourseIndex(int categoryCourse)
+        {
+            var result = _context.Courses.Where(c => c.Category.CategoryId == categoryCourse).Include(u => u.Teacher).ToList();
             return View(result);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
