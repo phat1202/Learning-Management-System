@@ -23,13 +23,13 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
-
+    <link href="~/css/coursedetail.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid d-none d-lg-block">
         <div class="row align-items-center py-4 px-xl-5">
             <div class="col-lg-3">
-                <a href="#" class="text-decoration-none">
+                <a asp-action="Index" asp-controller="Home" class="text-decoration-none">
                     <h1 class="m-0"><span class="text-primary">E</span>COURSES</h1>
                 </a>
             </div>
@@ -102,17 +102,17 @@
                             <a asp-action="About" asp-controller="Home" class="nav-item nav-link">About</a>
                             <a asp-action="ViewCategoryCourseIndex" asp-controller="Home" class="nav-item nav-link">Courses</a>
                             <a asp-action="ViewTeacherIndex" asp-controller="Home" class="nav-item nav-link">Teachers</a>
-                            <a href="#" class=" nav-item nav-link">
+@*                             <a href="#" class=" nav-item nav-link">
                                 <i class="far fa-bell"></i>
-                            </a>
+                            </a> *@
 
-                            @*                             <div class="nav-item dropdown">
+                                                        <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Blog</a>
                             <div class="dropdown-menu rounded-0 m-0">
                             <a href="blog.html" class="dropdown-item">Blog List</a>
                             <a href="single.html" class="dropdown-item">Blog Detail</a>
                             </div>
-                            </div> *@
+                            </div>
                             @*  <a asp-action="Register" asp-controller="User" class="nav-item nav-link">Sign Up</a> *@
                         </div>
                         @if (User.Identity.IsAuthenticated)

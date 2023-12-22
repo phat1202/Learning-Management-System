@@ -20,7 +20,7 @@
                                 <small class="m-0">@* <i class="far fa-clock text-primary mr-2"></i>*@<i class="bi bi-person"></i>Teacher: @item.Teacher.UserName</small>
                                 <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@NumberStudent</small>
                             </div>
-                            <a class="h5" href="">@item.CourseTitle</a>
+                            <a class="h5" asp-action="CourseDetail" asp-controller="CourseUser" asp-route-courseId="@item.CourseId">@item.CourseTitle</a>
 @*                             <br>
                             <a id="teacherName" href="">Teacher: @item.Teacher.UserName</a> *@
                             <div class="border-top mt-4 pt-4">
