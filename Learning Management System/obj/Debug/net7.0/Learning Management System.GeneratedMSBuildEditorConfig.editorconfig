@@ -16,8 +16,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/CourseUser/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlVXNlclxDaGVja291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/CourseUser/CourseDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlVXNlclxDb3Vyc2VEZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/CourseUser/PaymentSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlVXNlclxQYXltZW50U3VjY2Vzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/CourseUser/RegisterCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlVXNlclxSZWdpc3RlckNvdXJzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Home/About.cshtml]

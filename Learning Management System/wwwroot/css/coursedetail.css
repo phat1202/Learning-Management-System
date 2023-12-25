@@ -60,14 +60,14 @@ text-color {
 .custom-btn {
     text-transform: capitalize;
     background-color: #fd7e14;
-    color: black;
+    color: white;
     width: 150px;
     height: 40px;
     border-radius: 0;
 }
 
     .custom-btn:hover {
-        background-color: #0093c4 !important;
+        background-color: #6c757d !important;
         font-size: 18px;
         color: white !important;
     }

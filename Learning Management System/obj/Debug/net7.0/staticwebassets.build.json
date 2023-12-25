@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XiHpxTd4JS6vqY2S68krU696y5TxIkT4rY1gHGAr6lw=",
+  "Hash": "JERYGPHK+W1PMeAoK3GR137Hmcu3ikv00kBfEekAkbc=",
   "Source": "Learning Management System",
   "BasePath": "_content/Learning Management System",
   "Mode": "Default",
@@ -168,6 +168,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\coursedetail.css"
+    },
+    {
+      "Identity": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\payment.css",
+      "SourceId": "Learning Management System",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\",
+      "BasePath": "_content/Learning Management System",
+      "RelativePath": "css/payment.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\payment.css"
     },
     {
       "Identity": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\site.css",

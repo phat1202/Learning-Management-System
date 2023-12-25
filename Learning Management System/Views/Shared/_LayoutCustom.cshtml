@@ -24,6 +24,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
     <link href="~/css/coursedetail.css" rel="stylesheet">
+    <link href="~/css/payment.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid d-none d-lg-block">
@@ -98,7 +99,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav py-0">
-                            <a href="#" class="nav-item nav-link active">Home</a>
+                            <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">Home</a>
                             <a asp-action="About" asp-controller="Home" class="nav-item nav-link">About</a>
                             <a asp-action="ViewCategoryCourseIndex" asp-controller="Home" class="nav-item nav-link">Courses</a>
                             <a asp-action="ViewTeacherIndex" asp-controller="Home" class="nav-item nav-link">Teachers</a>
@@ -130,6 +131,7 @@
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a asp-action="UserProfile" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">Your Profile</a>
                                     <a asp-action="MyLearning" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">My Learnings</a>
+                                    <a asp-action="MyLearning" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">My Wishlist <i class="far fa-heart"></i></a>
                                     <a asp-action="Logout" asp-controller="User" class="dropdown-item">Log Out</a>
 
                                 </div>
