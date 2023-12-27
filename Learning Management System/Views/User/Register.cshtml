@@ -32,6 +32,10 @@
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
+                            <input asp-for="DateOfBirth" type="datetime" class="form-control border-0 p-4" id="subject" placeholder="Date Of Birth" required="required" data-validation-required-message="Please confirm password" />
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
                             <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control border-0 p-2">
                                 <option>Select Gender</option>
                             </select>

@@ -1,0 +1,36 @@
+﻿@model Learning_Management_System.Models.Course
+
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;"></h5>
+            <h1>Create New Course</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form bg-secondary rounded p-5">
+                    <form asp-action="Register" asp-controller="Teacher">
+                        <div class="form-group" hidden>
+                            <label for="exampleInputEmail1">Course Title</label>
+                            <input asp-for="TeacherId" type="text" class="form-control" value="@User.Claims.First().Value" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Course Title</label>
+                            <input asp-for="CourseTitle" type="text" class="form-control" id="name" placeholder="Course Title" required="required" data-validation-required-message="Please enter your name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Course Description</label>
+                            <textarea asp-for="CourseDescription" type="text" class="form-control" placeholder="Description" required="required"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control" />
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

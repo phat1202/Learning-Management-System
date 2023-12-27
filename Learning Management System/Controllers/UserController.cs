@@ -113,6 +113,8 @@ namespace Learning_Management_System.Controllers
                             Password = model.Password.Hash(),
                             Role = (int)EnumClass.Role.User,
                             Gender = model.Gender,
+                            Avatar = null,
+                            DateOfBirth = model.DateOfBirth,
                             IsActive = true,
                             IsDeleted = false,
                             IsTeacher = false,

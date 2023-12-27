@@ -21,6 +21,8 @@ namespace Learning_Management_System.Repositories.AccountRepository
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string? ConfirmPassword { get; set; }
         public int? Gender { get; set; }
+        [Required]
+        public DateTime DateOfBirth { get; set; }
         public string? ErrorMessage { get; set; }
     }
 }

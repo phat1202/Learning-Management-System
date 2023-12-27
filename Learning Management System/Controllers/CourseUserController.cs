@@ -54,6 +54,8 @@ namespace Learning_Management_System.Controllers
                 CourseId = course.CourseId,
                 EnrollmentDate = DateTime.Now,
             };
+            user.Role = 2;
+            user.IsStudent = true;
             _context.Add(NewEnrollments);
             _context.SaveChanges();
             return RedirectToAction("PaymentSuccess");
