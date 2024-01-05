@@ -10,7 +10,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="contact-form bg-secondary rounded p-5">
-                    <form asp-action="Register" asp-controller="Teacher">
+
+                    <form enctype="multipart/form-data" asp-action="CreateNewCourse" asp-controller="Teacher">
                         <div class="form-group" hidden>
                             <label for="exampleInputEmail1">Course Title</label>
                             <input asp-for="TeacherId" type="text" class="form-control" value="@User.Claims.First().Value" />
@@ -24,9 +25,22 @@
                             <textarea asp-for="CourseDescription" type="text" class="form-control" placeholder="Description" required="required"></textarea>
                         </div>
                         <div class="form-group">
-                            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control" />
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <select asp-for="CategoryId" asp-items="@ViewBag.CategoryId" class="form-control"></select>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">$</span>
+                                </div>
+                                <input asp-for="Price" type="number" placeholder="How much is your Course?" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Cover Image</label>
+                            <input id="imageCover" name="imageCover" type="file" class="form-control" placeholder="Upload Image" />
+                        </div>
+                        <span class="alert-danger">@Html.ValidationSummary()</span>
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

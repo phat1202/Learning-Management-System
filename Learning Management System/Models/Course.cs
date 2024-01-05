@@ -13,6 +13,9 @@ namespace Learning_Management_System.Models
         [Required]
         public string? CourseDescription { get; set; }
         public string? TeacherId { get; set; }
+        public decimal? Price { get; set; }
+        public string? ImageCover { get; set; }
+        public List<Rating>? Rating { get; set; }
 
         [ForeignKey(nameof(TeacherId))]
         [Required]

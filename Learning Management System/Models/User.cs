@@ -29,5 +29,8 @@ namespace Learning_Management_System.Models
         public bool IsStudent { get; set; }
         public string? Avatar { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string? CartId { get; set; }
+        [ForeignKey(nameof(CartId))]
+        public Cart cart { get; set; }
     }
 }

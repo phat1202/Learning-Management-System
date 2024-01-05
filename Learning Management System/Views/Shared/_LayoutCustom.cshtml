@@ -25,6 +25,7 @@
     <link href="~/css/style.css" rel="stylesheet">
     <link href="~/css/coursedetail.css" rel="stylesheet">
     <link href="~/css/payment.css" rel="stylesheet">
+    <link href="~/css/cart.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid d-none d-lg-block">
@@ -114,24 +115,36 @@
                                     <a href="single.html" class="dropdown-item">Blog Detail</a>
                                 </div>
                             </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-action="CartIndex" asp-controller="Cart" asp-route-userId="@User.Claims.First().Value" class="nav-item nav-link"><i class="fas fa-shopping-cart"></i></a>
+                            }
+                            else
+                            {
+                                <a asp-action="Login" asp-controller="User" class="nav-item nav-link"><i class="fas fa-shopping-cart"></i></a>
+                            }
+
                             @*  <a asp-action="Register" asp-controller="User" class="nav-item nav-link">Sign Up</a> *@
                         </div>
+                        @*                         <div class="navbar-nav py-0">
+
+
+                        </div> *@
                         @if (User.Identity.IsAuthenticated)
                         {
                             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
                             var userIdValue = userIdClaim != null ? userIdClaim.Value.Replace("UserId:", "") : null;
-
+                            var avatar = User.Claims.First(c => c.Type == "AvatarUrl").Value.Replace("AvatarUrl:", "");
                             @*  *@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                    <img src="~/img/avatar.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
+                                    <img src="@avatar" alt="" width="50" height="50" class="d-inline-block align-text-top">
                                 </a>
-
                                 @if (User.IsInRole("Teacher"))
                                 {
                                     <div class="dropdown-menu rounded-0 m-0">
                                         <a asp-action="UserProfile" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">Your Profile</a>
-                                        <a asp-action="MyLearning" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">My Classes</a>
+                                        <a asp-action="MyClasses" asp-controller="Teacher" asp-route-userId="@userIdValue" class="dropdown-item">My Classes</a>
                                         <a asp-action="MyLearning" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">My Learnings</a>
                                         <a asp-action="MyLearning" asp-controller="User" asp-route-userId="@userIdValue" class="dropdown-item">My Wishlist <i class="far fa-heart"></i></a>
                                         <a asp-action="Logout" asp-controller="User" class="dropdown-item">Log Out</a>

@@ -17,6 +17,7 @@ namespace Learning_Management_System.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult CourseDetail(int courseId)
         {
             if (courseId == 0)
@@ -61,6 +62,10 @@ namespace Learning_Management_System.Controllers
             return RedirectToAction("PaymentSuccess");
         }
         public IActionResult PaymentSuccess()
+        {
+            return View();
+        }
+        public IActionResult AddToWishLish()
         {
             return View();
         }

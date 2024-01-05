@@ -9,7 +9,10 @@
                              alt="Sample photo">
                         <div class="card-body p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
-
+                            @if (ViewBag.Message != null)
+                            {
+                                <p class="text-danger">*@ViewBag.Message</p>
+                            }
                             <form asp-action="BecomeTeacher" asp-route-userId="@User.Claims.First().Value" class="px-md-2">
 
                                 <div class="form-outline mb-4">
@@ -26,25 +29,25 @@
                                         </div>
 
                                     </div>
-@*                                     <div class="col-md-6 mb-4">
+                                    @*                                     <div class="col-md-6 mb-4">
 
-                                        <select class="select">
-                                            <option value="1" disabled>Gender</option>
-                                            <option value="2">Female</option>
-                                            <option value="3">Male</option>
-                                            <option value="4">Other</option>
-                                        </select>
+                                    <select class="select">
+                                    <option value="1" disabled>Gender</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Male</option>
+                                    <option value="4">Other</option>
+                                    </select>
 
                                     </div> *@
                                 </div>
 
                                 <div class="mb-4">
 
-@*                                     <select class="select">
-                                        <option value="1" disabled>Class</option>
-                                        <option value="2">Class 1</option>
-                                        <option value="3">Class 2</option>
-                                        <option value="4">Class 3</option>
+                                    @*                                     <select class="select">
+                                    <option value="1" disabled>Class</option>
+                                    <option value="2">Class 1</option>
+                                    <option value="3">Class 2</option>
+                                    <option value="4">Class 3</option>
                                     </select> *@
 
                                 </div>

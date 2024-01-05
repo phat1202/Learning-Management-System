@@ -5,6 +5,7 @@
 <body>
     @if (Model != null)
     {
+        var avatar = User.Claims.First(c => c.Type == "AvatarUrl").Value.Replace("AvatarUrl:", "");
         <section style="background-color: #eee;">
             <div class="container py-5">
                 <div class="row">
@@ -18,19 +19,27 @@
                         </nav>
                     </div>
                 </div>
-                <form asp-action="UserProfile">
+                <form enctype="multipart/form-data" asp-action="UserProfile">
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="card mb-4">
                                 <!-- Student Card -->
                                 <div class="card-body text-center">
-                                    <img src="~/img/avatar.png" alt="avatar"
-                                         class="rounded-circle img-fluid" style="width: 150px;">
+                                    @*                                     <img src="@avatar" alt="avatar"
+                                class="rounded-circle img-fluid" style="width: 150px;"> *@
+                                    <div class="avatar-wrapper">
+@*                                         <img src="@Model.Avatar" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"> *@
+                                        <img src="@Model.Avatar" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;" id="currentAvatar">
+                                        <img src="" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; display:none;" id="newAvatar">
+                                    </div>
+                                    <label for="fileInput" class="btn btn-secondary btn-xs px-1 py-0 m-0" >Upload</label>
+                                    <input name="avatar" type="file" id="fileInput" style="display: none;"/>
                                     <h5 class="my-3">@Model.UserName</h5>
                                     <p class="text-muted mb-1">@Enum.GetName(typeof(EnumClass.Role), Model.Role)</p>
                                     <p class="text-muted mb-4">Thoai Ngoc Hau, My Long</p>
                                     <div class="d-flex justify-content-center mb-2">
                                         <button type="submit" asp-action="UserProfile" asp-controller="User" class="btn btn-primary">Save</button>
+                                        @*                                         <button type="button" class="btn btn-primary" id="editButton" style="display: none;">Edit Information</button> *@
                                         @*                                     <button type="button" class="btn btn-primary" id="editButton">Edit Information</button> *@
                                         @*                                     <button type="button" class="btn btn-outline-primary" style="display: none;" id="saveButton">Save Information</button> *@
                                     </div>
@@ -81,7 +90,7 @@
                                             <p class="mb-0">Email</p>
                                         </div>
                                         <div class="col-sm-9">
-@*                                             <p class="text-muted mb-0" id="email">@Model.Email</p> *@
+                                            @*                                             <p class="text-muted mb-0" id="email">@Model.Email</p> *@
                                             <input type="text" asp-for="Email" id="EmailInput" class="form-control" value="@Model.Email">
                                         </div>
                                     </div>
@@ -205,57 +214,85 @@
             </div>
         </section>
     }
-@*     <!-- Modal -->
+    <script>
+        $(document).ready(function () {
+            // Trigger file input click when the "Upload" label is clicked
+            // $("label[for='fileInput']").click(function () {
+            //     $("#fileInput").click();
+            // });
+
+            // Handle file input change event
+            $("#fileInput").change(function () {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        // Update the source of the new avatar image with the uploaded file
+                        $("#newAvatar").attr("src", e.target.result);
+
+                        // Show the new avatar image and hide the current avatar image
+                        $("#newAvatar").show();
+                        $("#currentAvatar").hide();
+                    };
+
+                    // Read the uploaded file as a data URL
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
+    </script>
+    @*     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi không thành công.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Thay đổi không thành công.</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+    ...
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
     </div>
     <script>
-        $.ajax({
-            success: function (modelError) {
-                if (modelError != null) {
-                    $('#exampleModal').modal('show');
-                } else {
-                    // Handle the case when there is no error if needed
-                }
-            }
-        });
-        // // Check if the UserNull flag is set
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/User/UserProfile", // Replace "ControllerName" with your actual controller name
-        //     contentType: "application/json; charset=utf-8",
-        //     dataType: "json",
-        //     success: function (data) {
-        //         if (!data.success) {
-        //             // Update the page with the new user details if successful
-        //             var user = data.user;
-        //             // Update the page elements with the new user details
-        //             // ...
-        //         } else {
-        //             // Handle the error message if not successful
-        //             alert(data.message);
-        //         }
-        //     },
-        //     error: function (error) {
-        //         console.error("Error updating user profile:", error);
-        //     }
-        // });
+    $.ajax({
+    success: function (modelError) {
+    if (modelError != null) {
+    $('#exampleModal').modal('show');
+    } else {
+    // Handle the case when there is no error if needed
+    }
+    }
+    });
+    // // Check if the UserNull flag is set
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/User/UserProfile", // Replace "ControllerName" with your actual controller name
+    //     contentType: "application/json; charset=utf-8",
+    //     dataType: "json",
+    //     success: function (data) {
+    //         if (!data.success) {
+    //             // Update the page with the new user details if successful
+    //             var user = data.user;
+    //             // Update the page elements with the new user details
+    //             // ...
+    //         } else {
+    //             // Handle the error message if not successful
+    //             alert(data.message);
+    //         }
+    //     },
+    //     error: function (error) {
+    //         console.error("Error updating user profile:", error);
+    //     }
+    // });
 
     </script> *@
 </body>

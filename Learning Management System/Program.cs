@@ -36,6 +36,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Student", policy => policy.RequireRole("Student", "Teacher"));
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

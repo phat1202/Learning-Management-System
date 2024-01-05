@@ -490,3 +490,4 @@ C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Manage
 C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System\obj\Debug\net7.0\Learning Management System.pdb
 C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System\obj\Debug\net7.0\Learning Management System.genruntimeconfig.cache
 C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System\obj\Debug\net7.0\ref\Learning Management System.dll
+C:\Users\trgta\OneDrive\Desktop\C#\PP\Learning-Management-System\Learning Management System\obj\Debug\net7.0\Learning Management System.sourcelink.json

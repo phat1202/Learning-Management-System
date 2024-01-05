@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
     },
     {
+      "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\cart.css",
+      "PackagePath": "staticwebassets\\css\\cart.css"
+    },
+    {
       "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\coursedetail.css",
       "PackagePath": "staticwebassets\\css\\coursedetail.css"
     },

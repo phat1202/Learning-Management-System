@@ -9,7 +9,14 @@
         <div class="text-center mb-5">
             <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Teachers</h5>
             <h1>Meet Our Teachers</h1>
-            <h5 class="text-primary"><a asp-action="BecomeTeacher" asp-controller="Teacher">Join with us</a></h5>
+            @if(User.IsInRole("Teacher"))
+            {
+                <h5 class="text-primary"><a asp-action="BecomeTeacher" asp-controller="Teacher">Create a course</a></h5>
+            }
+            else
+            {
+                <h5 class="text-primary"><a asp-action="BecomeTeacher" asp-controller="Teacher">Join with us</a></h5>
+            }
         </div>
         <div class="row">
             @foreach (var item in Model)

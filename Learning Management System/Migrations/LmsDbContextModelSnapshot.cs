@@ -19,11 +19,52 @@ namespace Learning_Management_System.Migrations
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Learning_Management_System.Models.Cart", b =>
+                {
+                    b.Property<string>("CartId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<decimal?>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.CartItem", b =>
+                {
+                    b.Property<int?>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CartId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("Learning_Management_System.Models.CategoryCourse", b =>
                 {
                     b.Property<int?>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("CategoryImageCover")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -38,6 +79,16 @@ namespace Learning_Management_System.Migrations
                         {
                             CategoryId = 1,
                             CategoryName = "Web Developement"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Marketing"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            CategoryName = "SEO"
                         });
                 });
 
@@ -82,6 +133,12 @@ namespace Learning_Management_System.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ImageCover")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("TeacherId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
@@ -93,16 +150,6 @@ namespace Learning_Management_System.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            CourseId = 1,
-                            CategoryId = 1,
-                            CourseDescription = "C#, SQL, EntityFramework",
-                            CourseTitle = "ASP.NET Core",
-                            TeacherId = "2"
-                        });
                 });
 
             modelBuilder.Entity("Learning_Management_System.Models.Enrollment", b =>
@@ -153,6 +200,34 @@ namespace Learning_Management_System.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("Learning_Management_System.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StarRate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("Learning_Management_System.Models.StudentProgress", b =>
                 {
                     b.Property<int?>("ProgressId")
@@ -193,6 +268,10 @@ namespace Learning_Management_System.Migrations
                     b.Property<string>("Avatar")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("CartId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -201,7 +280,7 @@ namespace Learning_Management_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("Gender")
                         .HasColumnType("int");
@@ -235,40 +314,26 @@ namespace Learning_Management_System.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasIndex("CartId");
 
                     b.ToTable("Users");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            UserId = "1",
-                            CreatedAt = new DateTime(2023, 12, 9, 16, 28, 54, 307, DateTimeKind.Local).AddTicks(7401),
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "firstStudent@gmail.com",
-                            IsActive = false,
-                            IsDeleted = false,
-                            IsStudent = true,
-                            IsTeacher = false,
-                            Password = "WnDvAVc6XNj2E65rrp/cjxaatG9G9uJAv6+qm4hOTPg=",
-                            UpdatedAt = new DateTime(2023, 12, 9, 16, 28, 54, 307, DateTimeKind.Local).AddTicks(7387),
-                            UserName = "firstStudent"
-                        },
-                        new
-                        {
-                            UserId = "2",
-                            CreatedAt = new DateTime(2023, 12, 9, 16, 28, 54, 307, DateTimeKind.Local).AddTicks(7728),
-                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "firstTeacher@gmail.com",
-                            IsActive = false,
-                            IsDeleted = false,
-                            IsStudent = false,
-                            IsTeacher = false,
-                            Password = "1JeuIu/LWAqR9mTJV+7zV7sK9KYnsZJh+F5WbwhVmrA=",
-                            UpdatedAt = new DateTime(2023, 12, 9, 16, 28, 54, 307, DateTimeKind.Local).AddTicks(7727),
-                            UserName = "firstTeacher"
-                        });
+            modelBuilder.Entity("Learning_Management_System.Models.CartItem", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Learning_Management_System.Models.Course", "course")
+                        .WithMany()
+                        .HasForeignKey("CourseId");
+
+                    b.Navigation("cart");
+
+                    b.Navigation("course");
                 });
 
             modelBuilder.Entity("Learning_Management_System.Models.Chapter", b =>
@@ -329,6 +394,21 @@ namespace Learning_Management_System.Migrations
                     b.Navigation("chapter");
                 });
 
+            modelBuilder.Entity("Learning_Management_System.Models.Rating", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Course", "course")
+                        .WithMany("Rating")
+                        .HasForeignKey("CourseId");
+
+                    b.HasOne("Learning_Management_System.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("course");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("Learning_Management_System.Models.StudentProgress", b =>
                 {
                     b.HasOne("Learning_Management_System.Models.Lesson", "lesson")
@@ -346,6 +426,22 @@ namespace Learning_Management_System.Migrations
                     b.Navigation("lesson");
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.User", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Cart", "cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("cart");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.Course", b =>
+                {
+                    b.Navigation("Rating");
                 });
 #pragma warning restore 612, 618
         }

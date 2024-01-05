@@ -8,6 +8,8 @@ using Learning_Management_System.Extensions;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Identity;
 using Learning_Management_System.EndUserModels;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Principal;
 
 namespace Learning_Management_System.Controllers
 {
@@ -40,6 +42,7 @@ namespace Learning_Management_System.Controllers
                 {
                     var claims = new List<Claim>() {
                         new Claim("UserId", user.UserId),
+                        new Claim("AvatarUrl", user.Avatar),
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, ((EnumClass.Role)user.Role).ToString())
@@ -98,6 +101,7 @@ namespace Learning_Management_System.Controllers
                 if (model.Email != null)
                 {
                     var error = new ErrorViewModel();
+
                     var userExisting = _context.Users.FirstOrDefault(x => x.Email!.Trim().ToLower() == model.Email.Trim().ToUpper() && !x.IsDeleted);
                     if (userExisting != null)
                     {
@@ -106,14 +110,18 @@ namespace Learning_Management_System.Controllers
                     }
                     if (ModelState.IsValid)
                     {
+                        var cart = new Cart()
+                        {
+                            TotalPrice = 0,
+                        };
                         var user = new User
                         {
                             UserName = model.UserName,
-                            Email = model.Email.Trim().ToUpper(),
+                            Email = model.Email.Trim(),
                             Password = model.Password.Hash(),
                             Role = (int)EnumClass.Role.User,
                             Gender = model.Gender,
-                            Avatar = null,
+                            Avatar = "https://res.cloudinary.com/dqnsplymn/image/upload/v1704188506/avatar_ic68ko.png",
                             DateOfBirth = model.DateOfBirth,
                             IsActive = true,
                             IsDeleted = false,
@@ -121,7 +129,9 @@ namespace Learning_Management_System.Controllers
                             IsStudent = false,
                             CreatedAt = DateTime.Now,
                             UpdatedAt = DateTime.Now,
+                            CartId = cart.CartId,
                         };
+                        _context.Carts.Add(cart);
                         _context.Add(user);
                         await _context.SaveChangesAsync();
                         return RedirectToAction("Login");
@@ -138,7 +148,7 @@ namespace Learning_Management_System.Controllers
                 model.ErrorMessage = "Lỗi khi tạo tài khoản";
                 return View(model);
             }
-            return View();
+            return RedirectToAction("Login");
         }
         public IActionResult UserProfile(string userId)
         {
@@ -146,9 +156,15 @@ namespace Learning_Management_System.Controllers
             return View(user);
         }
         [HttpPost]
-        public IActionResult UserProfile(User userEditProfile)
+        public IActionResult UserProfile(User userEditProfile, IFormFile? avatar)
         {
+            var uploadImage = new UpLoadFileImage();
             var user = _context.Users.FirstOrDefault(u => u.UserId == userEditProfile.UserId);
+            if (avatar != null)
+            {
+                var avatarChange = uploadImage.UploadImage(avatar);
+                user.Avatar = avatarChange;
+            }
             if (user == null)
             {
                 //string errorMessage = "Thay đổi không thành công";
@@ -165,6 +181,7 @@ namespace Learning_Management_System.Controllers
             user.UserName = userEditProfile.UserName;
             user.DateOfBirth = userEditProfile.DateOfBirth;
             _context.SaveChanges();
+
             return View(user);
         }
         public IActionResult MyLearning(string userId)
