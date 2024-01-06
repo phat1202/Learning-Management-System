@@ -3,12 +3,9 @@
 @{
 
 }
-
-
-
 @if (Model != null)
 {
-    var similarList = _context.Courses.Where(list => list.Category.CategoryId == Model.Category.CategoryId && list.CourseId != Model.CourseId);
+    var similarList = _context.Courses.Where(list => list.Category.CategoryId == Model.Category.CategoryId && list.CourseId != Model.CourseId && list.TeacherId == Model.TeacherId);
     <div class="container my-5">
         <div class="row">
             <div class="col-md-5">
@@ -117,15 +114,28 @@
 
     <div class="container similar-products my-4">
         <hr>
-        <p class="display-5">Similar Courses</p>
+        <p class="display-5">Similar Courses of Teacher @Model.Teacher.UserName</p>
         <div class="row">
             @foreach (var item in similarList)
             {
-                <div class="col-md-3">
-                    <div class="similar-product">
-                        <img class="w-100" src="https://source.unsplash.com/gsKdPcIyeGg" alt="Preview">
-                        <p class="title">@item.CourseTitle</p>
-                        <p class="price">$100</p>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <img class="img-fluid" src="@item.ImageCover" alt="">
+                        <div class="bg-secondary p-4">
+                            <div class="d-flex justify-content-between mb-3">
+
+
+                            </div>
+                            <a class="h5" asp-action="CourseDetail" asp-controller="CourseUser" asp-route-courseId="@item.CourseId">@item.CourseTitle</a>
+                            @*                             <br>
+                    <a id="teacherName" href="">Teacher: @item.Teacher.UserName</a> *@
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h5 class="m-0">$@item.Price</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

@@ -23,7 +23,7 @@ namespace Learning_Management_System.Controllers
         {
             var user = _context.Users.First(u => u.UserId == userId);
             var cartItems = _context.CartItems.Where(i => i.CartId == user.CartId)
-                                                .Include(c => c.course).Include(u => u.course.Teacher)
+                                                .Include(c => c.course).Include(u => u.course.Teacher).Include(c => c.cart)
                                                 .ToList();
             return View(cartItems);
         }
@@ -35,7 +35,7 @@ namespace Learning_Management_System.Controllers
             {
                 return View();
             }
-            var item_Added = _context.CartItems.FirstOrDefault(i => i.CourseId == course.CourseId);
+            var item_Added = _context.CartItems.FirstOrDefault(i => i.CourseId == course.CourseId && i.CartId == user.CartId);
             if (item_Added == null)
             {
                 var newItem = new CartItem()
@@ -51,7 +51,7 @@ namespace Learning_Management_System.Controllers
                 item_Added.Quantity++;
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction("CartIndex");
+            return RedirectToAction("CartIndex", new { userId = userId });
         }
     }
 }

@@ -56,6 +56,14 @@ namespace Learning_Management_System.Controllers
                     });
                     var returnUrl = HttpContext.Session.GetString("ReturnUrl");
                     HttpContext.Session.Remove("ReturnUrl");
+                    //if (!string.IsNullOrEmpty(returnUrl))                 //Kiểm tra Url có cần Auth hay ko, nếu không thì skip
+                    //{
+                    //    var uriBuilder = new UriBuilder(returnUrl);
+                    //    var queryParams = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+                    //    queryParams.Remove("userId");
+                    //    uriBuilder.Query = queryParams.ToString();
+                    //    returnUrl = uriBuilder.ToString();
+                    //}
                     if (string.IsNullOrEmpty(returnUrl))
                     {
                         return Redirect("/");
@@ -74,11 +82,12 @@ namespace Learning_Management_System.Controllers
             }
             return View(objLoginModel);
         }
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             HttpContext.Session.SetString("ReturnUrl", Request.Headers["Referer"].ToString());
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var returnUrl = HttpContext.Session.GetString("ReturnUrl");
+            return RedirectToAction("Login");
             HttpContext.Session.Remove("ReturnUrl");
             if (string.IsNullOrEmpty(returnUrl))
             {

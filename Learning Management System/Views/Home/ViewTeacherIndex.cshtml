@@ -11,7 +11,7 @@
             <h1>Meet Our Teachers</h1>
             @if(User.IsInRole("Teacher"))
             {
-                <h5 class="text-primary"><a asp-action="BecomeTeacher" asp-controller="Teacher">Create a course</a></h5>
+                <h5 class="text-primary"><a asp-action="MyClasses" asp-controller="Teacher">Create a course</a></h5>
             }
             else
             {
@@ -19,12 +19,13 @@
             }
         </div>
         <div class="row">
-            @foreach (var item in Model)
+            @foreach (var item in Model.GroupBy(u => u.Teacher.UserId))
             {
+                var result = item.First();
                 <div class="col-md-6 col-lg-3 text-center team mb-4">
                     <div class="team-item rounded overflow-hidden mb-2">
                         <div class="team-img position-relative">
-                            <img class="img-fluid" src="~/img/teacher.png" alt="">
+                            <img class="img-fluid" src="@result.Teacher.Avatar" alt="">
                             <div class="team-social">
                                 <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
                                 <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -32,8 +33,8 @@
                             </div>
                         </div>
                         <div class="bg-secondary p-4">
-                            <h5>@item.Teacher.UserName</h5>
-                            <p class="m-0">@item.Category.CategoryName</p>
+                            <h5>@result.Teacher.UserName</h5>
+                            <p class="m-0">@result.Category.CategoryName</p>
                         </div>
                     </div>
                 </div>

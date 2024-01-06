@@ -67,13 +67,14 @@ namespace Learning_Management_System.Controllers
             {
                 CourseTitle = course.CourseTitle,
                 CourseDescription = course.CourseDescription,
+                Price = course.Price,
                 CategoryId = course.CategoryId,
                 TeacherId = course.TeacherId,
                 ImageCover = uploadImage.UploadImage(imageCover),
             };
             _context.Add(newCourse);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MyClasses", "Teacher");
         }
         public IActionResult AddChapter()
         {
