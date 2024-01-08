@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Learning_Management_System.EndUserModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Principal;
+using System.Linq;
 
 namespace Learning_Management_System.Controllers
 {
@@ -56,20 +57,20 @@ namespace Learning_Management_System.Controllers
                     });
                     var returnUrl = HttpContext.Session.GetString("ReturnUrl");
                     HttpContext.Session.Remove("ReturnUrl");
-                    //if (!string.IsNullOrEmpty(returnUrl))                 //Kiểm tra Url có cần Auth hay ko, nếu không thì skip
-                    //{
-                    //    var uriBuilder = new UriBuilder(returnUrl);
-                    //    var queryParams = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
-                    //    queryParams.Remove("userId");
-                    //    uriBuilder.Query = queryParams.ToString();
-                    //    returnUrl = uriBuilder.ToString();
-                    //}
                     if (string.IsNullOrEmpty(returnUrl))
                     {
                         return Redirect("/");
                     }
                     else
                     {
+                        //Kiểm tra Url có cần Auth hay ko, nếu không thì skip (Game xong dô debug)
+                        var uriBuilder = new UriBuilder(returnUrl);
+                        var queryParams = uriBuilder.Query.Contains("userId");
+                        //var queryParams = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+                        if (queryParams)
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                         return Redirect(returnUrl);
                     }
 

@@ -5,6 +5,7 @@
 }
 @if (Model != null)
 {
+    var originalPrice = 150 - Model.Price;
     var similarList = _context.Courses.Where(list => list.Category.CategoryId == Model.Category.CategoryId && list.CourseId != Model.CourseId && list.TeacherId == Model.TeacherId);
     <div class="container my-5">
         <div class="row">
@@ -38,8 +39,8 @@
 
 
                     <div class="price-area my-4">
-                        <p class="old-price mb-1"><del>$100</del> <span class="old-price-discount text-danger">(20% off)</span></p>
-                        <p class="new-price text-bold mb-1">$80</p>
+                        <p class="old-price mb-1"><del>$150</del> <span class="old-price-discount text-danger">($@originalPrice Off)</span></p>
+                        <p class="new-price text-bold mb-1">$@Model.Price</p>
                         <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p>
 
                     </div>
