@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Learning_Management_System.EndUserModels;
 
 namespace Learning_Management_System.Controllers
 {
@@ -19,9 +20,10 @@ namespace Learning_Management_System.Controllers
         {
             return View();
         }
-        public IActionResult CartIndex(string userId)
+        public IActionResult CartIndex()
         {
-            var user = _context.Users.First(u => u.UserId == userId);
+            var userIdFromSession = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userIdFromSession);
             var cartItems = _context.CartItems.Where(i => i.CartId == user.CartId)
                                                 .Include(c => c.course).Include(u => u.course.Teacher).Include(c => c.cart)
                                                 .ToList();
@@ -43,6 +45,7 @@ namespace Learning_Management_System.Controllers
                     CourseId = course.CourseId,
                     Quantity = 1,
                     CartId = user.CartId,
+                    ItemSelected = true,
                 };
                 _context.Add(newItem);
             }
@@ -51,7 +54,35 @@ namespace Learning_Management_System.Controllers
                 item_Added.Quantity++;
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction("CartIndex", new { userId = userId });
+            return RedirectToAction("CartIndex");
+        }
+        public IActionResult RemoveCartItem(int cartItem)
+        {
+            var item = _context.CartItems.First(i => i.CartItemId == cartItem);
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+            }
+            else
+            {
+                _context.Remove(item);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("CartIndex");
+        }
+        public IActionResult SelectItem(int itemId)
+        {
+            var result = _context.CartItems.FirstOrDefault(i => i.CartItemId == itemId);
+            if(result.ItemSelected == true)
+            {
+                result.ItemSelected = false;
+            }
+            else
+            {
+                result.ItemSelected = true;
+            }
+            _context.SaveChanges();
+            return RedirectToAction("CartIndex");
         }
     }
 }

@@ -86,8 +86,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxCZWNvbWVUZWFjaGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CourseManagement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDb3Vyc2VNYW5hZ2VtZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CreateNewChapter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDcmVhdGVOZXdDaGFwdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CreateNewCourse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDcmVhdGVOZXdDb3Vyc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/CreateNewLesson.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGVhY2hlclxDcmVhdGVOZXdMZXNzb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trgta/OneDrive/Desktop/C\#/PP/Learning-Management-System/Learning Management System/Views/Teacher/MyClasses.cshtml]

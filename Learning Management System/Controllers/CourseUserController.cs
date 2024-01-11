@@ -1,4 +1,5 @@
-﻿using Learning_Management_System.Models;
+﻿using CloudinaryDotNet;
+using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace Learning_Management_System.Controllers
                 return View();
             }
             var result = _context.Courses.Include(t => t.Teacher).Include(c => c.Category).First(c => c.CourseId == courseId);
-            if(result == null)
+            if (result == null)
             {
                 return View();
             }
@@ -33,8 +34,21 @@ namespace Learning_Management_System.Controllers
         }
         public IActionResult Checkout(int courseId)
         {
+            var userId = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userId);
+            if (courseId != 0)
+            {
+                ViewData["CourseItem"] = _context.Courses.First(c => c.CourseId == courseId);
+                return View();
+            }
+
             TempData["CourseId"] = courseId;
-            return View();
+            var items = _context.CartItems.Where(e => e.cart.CartId == user.CartId && e.ItemSelected == true)
+                                            .Include(c => c.cart)
+                                            .Include(c => c.course)
+                                            .ToList();
+
+            return View(items);
         }
         [HttpPost]
         public IActionResult Checkout(string userId)
@@ -43,7 +57,7 @@ namespace Learning_Management_System.Controllers
             var course = _context.Courses.First(c => c.CourseId == courseId);
             var user = _context.Users.First(u => u.UserId == userId);
             var exist_enroll = _context.Enrollments.FirstOrDefault(en => en.UserId == user.UserId && en.CourseId == course.CourseId);
-            if(exist_enroll != null)
+            if (exist_enroll != null)
             {
                 ViewData["ErrorMessage"] = "You have registered this course.";
                 TempData["CourseId"] = courseId;

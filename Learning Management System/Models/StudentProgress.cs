@@ -16,8 +16,6 @@ namespace Learning_Management_System.Models
 
         public string? CompletionStatus { get; set; }
 
-        public int? Score { get; set; }
-
         [DataType(DataType.DateTime)]
         public DateTime LastAccessed { get; set; }
         [ForeignKey(nameof(UserId))]

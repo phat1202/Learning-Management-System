@@ -45,6 +45,9 @@ namespace Learning_Management_System.Migrations
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("ItemSelected")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
@@ -187,8 +190,8 @@ namespace Learning_Management_System.Migrations
                     b.Property<int?>("ChapterId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<string>("ContentUrl")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("LessonName")
                         .HasColumnType("longtext");
@@ -242,9 +245,6 @@ namespace Learning_Management_System.Migrations
 
                     b.Property<int?>("LessonId")
                         .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

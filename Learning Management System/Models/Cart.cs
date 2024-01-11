@@ -22,6 +22,7 @@ namespace Learning_Management_System.Models
         [ForeignKey("CourseId")]
         public Course? course { get; set; }
         public int? Quantity { get; set; }
+        public bool? ItemSelected { get; set; }
         public string? CartId { get; set; }
         [ForeignKey("CartId")]
         [Required]

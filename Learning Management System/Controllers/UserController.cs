@@ -63,7 +63,6 @@ namespace Learning_Management_System.Controllers
                     }
                     else
                     {
-                        //Kiểm tra Url có cần Auth hay ko, nếu không thì skip (Game xong dô debug)
                         var uriBuilder = new UriBuilder(returnUrl);
                         var queryParams = uriBuilder.Query.Contains("userId");
                         //var queryParams = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -77,7 +76,7 @@ namespace Learning_Management_System.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Invalid Credential";
+                    ViewBag.Message = "*Invalid Login";
                     return View(user);
                 }
             }
@@ -168,7 +167,7 @@ namespace Learning_Management_System.Controllers
         [HttpPost]
         public IActionResult UserProfile(User userEditProfile, IFormFile? avatar)
         {
-            var uploadImage = new UpLoadFileImage();
+            var uploadImage = new FileUpLoading();
             var user = _context.Users.FirstOrDefault(u => u.UserId == userEditProfile.UserId);
             if (avatar != null)
             {
@@ -191,7 +190,7 @@ namespace Learning_Management_System.Controllers
             user.UserName = userEditProfile.UserName;
             user.DateOfBirth = userEditProfile.DateOfBirth;
             _context.SaveChanges();
-
+            ViewData["Success"] = "Successful";
             return View(user);
         }
         public IActionResult MyLearning(string userId)

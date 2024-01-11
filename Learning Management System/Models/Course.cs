@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Policy;
 
 namespace Learning_Management_System.Models
 {
@@ -43,10 +44,9 @@ namespace Learning_Management_System.Models
         public int? LessonId { get; set; }
         public string? LessonName { get; set; }
         public int? ChapterId { get; set; }
+        public string? ContentUrl { get; set; }
         [ForeignKey(nameof(Chapter.ChapterId))]
         public Chapter? chapter { get; set; }
 
-        [DefaultValue(false)]
-        public bool IsCompleted { get; set; }
     }
 }

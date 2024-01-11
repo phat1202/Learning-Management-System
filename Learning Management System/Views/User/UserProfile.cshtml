@@ -39,6 +39,7 @@
                                     <p class="text-muted mb-4">Thoai Ngoc Hau, My Long</p>
                                     <div class="d-flex justify-content-center mb-2">
                                         <button type="submit" asp-action="UserProfile" asp-controller="User" class="btn btn-primary">Save</button>
+
                                         @*                                         <button type="button" class="btn btn-primary" id="editButton" style="display: none;">Edit Information</button> *@
                                         @*                                     <button type="button" class="btn btn-primary" id="editButton">Edit Information</button> *@
                                         @*                                     <button type="button" class="btn btn-outline-primary" style="display: none;" id="saveButton">Save Information</button> *@
@@ -112,7 +113,7 @@
                                         </div>
                                         <div class="col-sm-9">
                                             @*                                         <p class="text-muted mb-0">@Model.DateOfBirth.ToString("d")</p> *@
-                                            <input type="datetime" asp-for="DateOfBirth" class="form-control" value="@Model.DateOfBirth.ToString("d")">
+                                            <input type="date" asp-for="DateOfBirth" class="form-control" id="dateOfBirthInput">
                                         </div>
                                     </div>
                                     <hr>
@@ -295,4 +296,9 @@
     // });
 
     </script> *@
+
+    <script>
+        var dateOfBirth = new Date("@Model.DateOfBirth.ToString("yyyy-MM-dd")");
+        document.getElementById("dateOfBirthInput").valueAsDate = dateOfBirth;
+    </script>
 </body>

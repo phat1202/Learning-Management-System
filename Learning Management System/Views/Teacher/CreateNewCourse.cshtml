@@ -37,11 +37,11 @@
                         </div>
                         <div class="form-group">
                             <label>Upload Cover Image</label>
-                            <input id="imageCover" name="imageCover" type="file" class="form-control" placeholder="Upload Image" />
+                            <input id="imageCover" name="imageCover" type="file" class="form-control" required placeholder="Upload Image" />
                         </div>
                         <span class="alert-danger">@Html.ValidationSummary()</span>
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Next</button>
                     </form>
                 </div>
             </div>
