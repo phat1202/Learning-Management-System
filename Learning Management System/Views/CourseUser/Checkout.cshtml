@@ -30,7 +30,7 @@
                         totalPrice += (decimal)price;
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
-                                <h6 class="my-0">@item.course.CourseTitle</h6>
+                                <h6 class="my-0">@item.course.CourseTitle.Substring(0, 30)...</h6>
                                 <small class="text-muted">Quantity: @item.Quantity</small>
                             </div>
                             <span class="text-muted">$@price</span>
@@ -41,10 +41,10 @@
                 {
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">@ViewBag.CourseItem.Value.CourseTitle</h6>
-                            <small class="text-muted">Quantity: @ViewBag.CourseItem</small>
+                            <h6 class="my-0">@ViewBag.ItemTitle.Substring(0, 30)...</h6>
+                            <small class="text-muted">Quantity: 1</small>
                         </div>
-                        <span class="text-muted">$@ViewBag.CourseItem</span>
+                        <span class="text-muted">$ @ViewBag.ItemPrice</span>
                     </li>
                 }
                 @*                 <li class="list-group-item d-flex justify-content-between lh-condensed">

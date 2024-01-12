@@ -19,10 +19,10 @@
                             <label for="exampleInputEmail1">Chapter Title</label>
                             <input asp-for="ChapterTitle" type="text" class="form-control" id="name" placeholder="Chapter Title" required="required" />
                         </div>
-                        <div class="form-group">
+@*                         <div class="form-group">
                             <label for="exampleInputPassword1">Number of Lessons</label>
                             <input asp-for="TotalNumberOfLesson" type="number" class="form-control" placeholder="How many lessons?" required="required"></input>
-                        </div>
+                        </div> *@
                         <span class="alert-danger">@Html.ValidationSummary()</span>
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <button type="submit" class="btn btn-primary">Next</button>

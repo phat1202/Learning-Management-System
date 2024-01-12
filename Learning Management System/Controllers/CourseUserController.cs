@@ -38,7 +38,9 @@ namespace Learning_Management_System.Controllers
             var user = _context.Users.First(u => u.UserId == userId);
             if (courseId != 0)
             {
-                ViewData["CourseItem"] = _context.Courses.First(c => c.CourseId == courseId);
+                var courseItem = _context.Courses.First(c => c.CourseId == courseId);
+                ViewData["ItemTitle"] = courseItem.CourseTitle;
+                ViewData["ItemPrice"] = courseItem.Price;
                 return View();
             }
 
@@ -75,11 +77,12 @@ namespace Learning_Management_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("PaymentSuccess");
         }
+
         public IActionResult PaymentSuccess()
         {
             return View();
         }
-        public IActionResult AddToWishLish()
+        public IActionResult AddToWishList()
         {
             return View();
         }

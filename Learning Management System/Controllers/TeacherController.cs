@@ -88,38 +88,54 @@ namespace Learning_Management_System.Controllers
             {
                 CourseId = (int)TempData["CourseId"],
                 ChapterTitle = chapter.ChapterTitle,
-                TotalNumberOfLesson = chapter.TotalNumberOfLesson,
+                TotalNumberOfLesson = 0,
             };
             _context.Add(newChapter);
             _context.SaveChanges();
             return View();
         }
-        public IActionResult CreateNewLesson()
+        public IActionResult CreateNewLesson(int chapterId)
         {
+            TempData["ChapterId"] = chapterId;
             return View();
         }
         [HttpPost]
-        public IActionResult CreateNewLesson(Lesson lesson, IFormFile Video)
+        public async Task<IActionResult> CreateNewLesson(Lesson lesson, IFormFile Video)
         {
             var uploadVideo = new FileUpLoading();
             var uploaded = uploadVideo.UploadVideo(Video);
+            var chapterId = (int)TempData["ChapterId"];
+            var chapter = _context.Chapters.First(c => c.ChapterId == chapterId);
+            if (chapter == null)
+            {
+                return View();
+            }
             var newLesson = new Lesson
             {
-                ChapterId = lesson.ChapterId,
+                ChapterId = chapterId,
                 LessonName = lesson.LessonName,
-            };
-            _context.Add(newLesson);
-            _context.SaveChanges();
+                ContentUrl = uploaded
+            };           
+            await _context.AddAsync(newLesson);
+            chapter.TotalNumberOfLesson++;
+            await _context.SaveChangesAsync();
             return View();
         }
         public IActionResult CourseManagement(int courseId)
         {
+            ViewData["CourseId"] = courseId;
             var course = _context.Chapters.Where(c => c.course.CourseId == courseId)
                                           .Include(co => co.course)
                                           .Include(u => u.course.Teacher).ToList();
             return View(course);
         }
-        public IActionResult AddChapter()
+        public IActionResult LessonManagement(int chapterId)
+        {
+            ViewData["ChapterId"] = chapterId;
+            var lessonList = _context.Lessons.Where(l => l.ChapterId == chapterId).Include(c => c.chapter).ToList();
+            return View(lessonList);
+        }
+        public IActionResult AddNewChapter()
         {
             return View();
         }

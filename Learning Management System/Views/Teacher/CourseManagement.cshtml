@@ -1,87 +1,56 @@
 ﻿@model List<Learning_Management_System.Models.Chapter>
+@inject LmsDbContext db
 <div class="container px-3 my-5 clearfix">
-    <!-- Shopping cart table -->
     <div class="card">
         <div class="card-header">
-            <h2>Your Classes</h2>
+            <h2>Course Information</h2>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered m-0">
-
                     <thead>
                         <tr>
                             <!-- Set columns width -->
-                            <th class="text-center py-3 px-4" style="min-width: 400px;">Course Infomation</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
-                            <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
-                            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
-
-                            <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                            <th class="text-center py-3 px-4" style="min-width: 400px;">Chapters</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Edit</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            var NumberStudent = db.Enrollments.Count(student => student.CourseId == item.CourseId);
                             <tr>
                                 <td class="p-4">
                                     <div class="media align-items-center">
                                         <img src="@item.course.ImageCover" class="d-block ui-w-40 ui-bordered mr-4" alt="">
                                         <div class="media-body">
-                                            <a asp-action="CourseDetail" asp-controller="CourseUser" asp-route-courseId="@item.course.CourseTitle" class="d-block text-dark">@item.course.CourseTitle</a>
+                                            <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId"  class="d-block text-dark">@item.ChapterTitle</a>
                                             <small>
-                                                @*                                                 <span class="text-muted">Color:</span>
-                                            <span class="ui-product-color ui-product-color-sm align-text-bottom" style="background:#e81e2c;"></span> &nbsp; *@
-                                                <span class="text-muted">Teacher: </span> @item.course.Teacher.UserName &nbsp;
-                                                @*                                                 <span class="text-muted">Ships from: </span> China *@
+                                                <small class="m-0">Lectures: @item.TotalNumberOfLesson</small> &nbsp;
+                                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@NumberStudent</small> &nbsp;
                                             </small>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">$qqqqqq</td>
-                                <td class="text-center align-middle px-0">qqqqqqq</td>
-                                <td class="text-right font-weight-semibold align-middle p-4">$qqqqqq</td>
-                                <td class="text-center align-middle px-0">
-
-                                </td>
-                                <td class="text-center align-middle px-0"><a  class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                                <td class="text-right font-weight-semibold align-middle p-4">Edit</td>
                             </tr>
                         }
-
-
-
+                        <tr>
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <a asp-action="CreateNewChapter" asp-controller="Teacher" asp-route-courseId="@ViewBag.CourseId" class="d-block text-dark"><i class="fas fa-plus-circle"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4"></td>
+                        </tr>
                     </tbody>
-
                 </table>
             </div>
-
-            <!-- / Shopping cart table -->
-
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
-                <div class="mt-4">
-                    <label class="text-muted font-weight-normal">Promocode</label>
-                    <input type="text" placeholder="ABC" class="form-control">
-                </div>
-                <div class="d-flex">
-                    <div class="text-right mt-4 mr-5">
-                        <label class="text-muted font-weight-normal m-0">Discount</label>
-                        <div class="text-large"><strong>$0</strong></div>
-                    </div>
-                    <div class="text-right mt-4">
-                        <label class="text-muted font-weight-normal m-0">Total price</label>
-                        <div class="text-large"><strong>$</strong></div>
-                    </div>
-                </div>
-            </div>
-
             <div class="float-right">
-                <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</button>
-                <a asp-action="Checkout" asp-controller="CourseUser" class="btn btn-lg btn-primary mt-2">Checkout</a>
+                <a href="#" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to My Courses</a>
             </div>
-
         </div>
     </div>
-
 </div>

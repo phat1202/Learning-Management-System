@@ -1,0 +1,65 @@
+﻿@model List<Learning_Management_System.Models.Lesson>
+<div class="container px-3 my-5 clearfix">
+    <div class="card">
+        <div class="card-header">
+            <h2>Chapter Detail</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+
+                    <thead>
+                        <tr>
+                            <!-- Set columns width -->
+                            <th class="text-center py-3 px-4" style="min-width: 400px;">Lessons</th>
+                            <th class="text-right py-3 px-4" style="width: 100px;">Edit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if(Model.Count > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="p-4">
+                                        <div class="media align-items-center">
+                                            @*  <img src="@item.course.ImageCover" class="d-block ui-w-40 ui-bordered mr-4" alt=""> *@
+                                            <div class="media-body">
+                                                <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId" class="d-block text-dark"></a>
+                                                <small>
+                                                    <small class="m-0">Lectures: </small> &nbsp;
+                                                    <small class="m-0"><i class="fa fa-users text-primary mr-2"></i></small> &nbsp;
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right font-weight-semibold align-middle p-4">Edit</td>
+                                </tr>
+                            }
+                        }
+
+                        <tr>
+                            <td class="p-4">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <a asp-action="CreateNewLesson" asp-controller="Teacher" asp-route-chapterId="@ViewBag.ChapterId" class="d-block text-dark"><i class="fas fa-plus-circle"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-right font-weight-semibold align-middle p-4"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="float-right">
+                <a type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to My Courses</a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
