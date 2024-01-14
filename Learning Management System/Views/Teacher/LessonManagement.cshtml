@@ -24,9 +24,11 @@
                                 <tr>
                                     <td class="p-4">
                                         <div class="media align-items-center">
-                                            @*  <img src="@item.course.ImageCover" class="d-block ui-w-40 ui-bordered mr-4" alt=""> *@
+                                            <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId">
+                                                <img src="~/img/play-button_4345750.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                             </a>
                                             <div class="media-body">
-                                                <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId" class="d-block text-dark"></a>
+                                                <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId" class="d-block text-dark">@item.LessonName</a>
                                                 <small>
                                                     <small class="m-0">Lectures: </small> &nbsp;
                                                     <small class="m-0"><i class="fa fa-users text-primary mr-2"></i></small> &nbsp;
@@ -55,7 +57,7 @@
             </div>
 
             <div class="float-right">
-                <a type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to My Courses</a>
+                <a href="#" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to My Courses</a>
 
             </div>
 

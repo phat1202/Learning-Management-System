@@ -24,7 +24,7 @@
                                     <div class="media align-items-center">
                                         <img src="@item.course.ImageCover" class="d-block ui-w-40 ui-bordered mr-4" alt="">
                                         <div class="media-body">
-                                            <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId"  class="d-block text-dark">@item.ChapterTitle</a>
+                                            <a asp-action="LessonDetail" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId" class="d-block text-dark">@item.ChapterTitle</a>
                                             <small>
                                                 <small class="m-0">Lectures: @item.TotalNumberOfLesson</small> &nbsp;
                                                 <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@NumberStudent</small> &nbsp;

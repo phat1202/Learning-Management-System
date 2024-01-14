@@ -153,6 +153,14 @@
       "PackagePath": "staticwebassets\\img\\page-header.jpg"
     },
     {
+      "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\img\\play-button_4345750.png",
+      "PackagePath": "staticwebassets\\img\\play-button_4345750.png"
+    },
+    {
+      "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\img\\play.png",
+      "PackagePath": "staticwebassets\\img\\play.png"
+    },
+    {
       "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\img\\registration.jpg",
       "PackagePath": "staticwebassets\\img\\registration.jpg"
     },

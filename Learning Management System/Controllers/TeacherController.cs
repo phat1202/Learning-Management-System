@@ -135,14 +135,38 @@ namespace Learning_Management_System.Controllers
             var lessonList = _context.Lessons.Where(l => l.ChapterId == chapterId).Include(c => c.chapter).ToList();
             return View(lessonList);
         }
-        public IActionResult AddNewChapter()
+        public IActionResult LessonDetail(int chapterId)
         {
-            return View();
+            var lessons = _context.Lessons.Where(l => l.ChapterId == chapterId)
+                                            .Include(c => c.chapter)
+                                            .ToList();
+            return View(lessons);
         }
         public IActionResult MyClasses(string userId)
         {
             var myClasses = _context.Courses.Where(c => c.TeacherId == userId).Include(u => u.Teacher).ToList();
             return View(myClasses);
+        }
+        [HttpPost]
+        public IActionResult GetLessonId(int itemLessonId)
+        {
+            try
+            {
+                var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == itemLessonId);
+
+                if (lesson != null)
+                {
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl });
+                }
+                else
+                {
+                    return Json(new { success = false, errorMessage = "Lesson not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, errorMessage = ex.Message });
+            }
         }
     }
 }
