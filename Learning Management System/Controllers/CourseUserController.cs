@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,44 +39,86 @@ namespace Learning_Management_System.Controllers
             var user = _context.Users.First(u => u.UserId == userId);
             if (courseId != 0)
             {
+                //var listCourseIds = new List<int> { 0, courseId };
+                //TempData["CheckoutCourseIds"] = Newtonsoft.Json.JsonConvert.SerializeObject(listCourseIds);
+                TempData["CourseId"] = courseId;
                 var courseItem = _context.Courses.First(c => c.CourseId == courseId);
                 ViewData["ItemTitle"] = courseItem.CourseTitle;
                 ViewData["ItemPrice"] = courseItem.Price;
                 return View();
             }
 
-            TempData["CourseId"] = courseId;
             var items = _context.CartItems.Where(e => e.cart.CartId == user.CartId && e.ItemSelected == true)
                                             .Include(c => c.cart)
                                             .Include(c => c.course)
                                             .ToList();
-
+            if (items.Count() == 0)
+            {
+                return RedirectToAction("CartIndex", "Cart");
+            }
+            var cartItemIds = items.Select(item => item.CartItemId).ToList();
+            TempData["CheckoutCartIds"] = Newtonsoft.Json.JsonConvert.SerializeObject(cartItemIds);
             return View(items);
         }
         [HttpPost]
         public IActionResult Checkout(string userId)
         {
-            var courseId = (int)TempData["CourseId"];
-            var course = _context.Courses.First(c => c.CourseId == courseId);
             var user = _context.Users.First(u => u.UserId == userId);
-            var exist_enroll = _context.Enrollments.FirstOrDefault(en => en.UserId == user.UserId && en.CourseId == course.CourseId);
-            if (exist_enroll != null)
+            if (TempData["CourseId"] is int)
             {
-                ViewData["ErrorMessage"] = "You have registered this course.";
-                TempData["CourseId"] = courseId;
-                return View();
+                var courseId = (int)TempData["CourseId"];
+                var course = _context.Courses.First(c => c.CourseId == courseId);
+                var exist_enroll = _context.Enrollments.FirstOrDefault(en => en.UserId == user.UserId && en.CourseId == course.CourseId);
+                if (exist_enroll != null)
+                {
+                    ViewData["ErrorMessage"] = "You have registered this course.";
+                    TempData["CourseId"] = courseId;
+                    return View();
+                }
+                var NewEnrollments = new Enrollment
+                {
+                    UserId = user.UserId,
+                    CourseId = course.CourseId,
+                    EnrollmentDate = DateTime.Now,
+                };
+                _context.Add(NewEnrollments);
+                user.Role = 2;
+                user.IsStudent = true;
+                _context.SaveChanges();
+                return RedirectToAction("PaymentSuccess");
             }
-            var NewEnrollments = new Enrollment
+            else
             {
-                UserId = user.UserId,
-                CourseId = course.CourseId,
-                EnrollmentDate = DateTime.Now,
-            };
-            user.Role = 2;
-            user.IsStudent = true;
-            _context.Add(NewEnrollments);
-            _context.SaveChanges();
-            return RedirectToAction("PaymentSuccess");
+                var listError = new List<string>();
+                var cartItemIdsJson = TempData["CheckoutCartIds"] as string;
+                var cartItemIds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(cartItemIdsJson);
+                foreach (int id in cartItemIds)
+                {
+                    var cartItem = _context.CartItems.First(i => i.CartItemId == id);
+                    var exist_enroll = _context.Enrollments.FirstOrDefault(en => en.UserId == user.UserId && en.CourseId == cartItem.course.CourseId);
+                    if (exist_enroll == null)
+                    {
+                        var NewEnrollments = new Enrollment
+                        {
+                            UserId = user.UserId,
+                            CourseId = cartItem.CourseId,
+                            EnrollmentDate = DateTime.Now,
+                        };
+                        _context.Add(NewEnrollments);
+                        _context.Remove(cartItem);
+                    }
+                    else
+                    {
+                        string errorMess = $"You registered {exist_enroll.course.CourseTitle}";
+                        listError.Add(errorMess);
+                        
+                    }
+                }
+                user.Role = 2;
+                user.IsStudent = true;
+                _context.SaveChanges();
+                return RedirectToAction("PaymentSuccess");
+            }
         }
 
         public IActionResult PaymentSuccess()

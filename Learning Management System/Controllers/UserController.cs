@@ -193,14 +193,6 @@ namespace Learning_Management_System.Controllers
             ViewData["Success"] = "Successful";
             return View(user);
         }
-        public IActionResult MyLearning(string userId)
-        {
-            var result = _context.Enrollments.Where(learnings => learnings.UserId == userId)
-                .Include(c => c.course.Teacher)
-                .Include(u => u.user)
-                .ToList();
 
-            return View(result);
-        }
     }
 }
