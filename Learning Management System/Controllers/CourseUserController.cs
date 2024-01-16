@@ -85,6 +85,7 @@ namespace Learning_Management_System.Controllers
                 user.Role = 2;
                 user.IsStudent = true;
                 _context.SaveChanges();
+                TempData.Clear();
                 return RedirectToAction("PaymentSuccess");
             }
             else
@@ -94,7 +95,7 @@ namespace Learning_Management_System.Controllers
                 var cartItemIds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(cartItemIdsJson);
                 foreach (int id in cartItemIds)
                 {
-                    var cartItem = _context.CartItems.First(i => i.CartItemId == id);
+                    var cartItem = _context.CartItems.Where(i => i.CartItemId == id).Include(c => c.course).First();
                     var exist_enroll = _context.Enrollments.FirstOrDefault(en => en.UserId == user.UserId && en.CourseId == cartItem.course.CourseId);
                     if (exist_enroll == null)
                     {
@@ -109,7 +110,7 @@ namespace Learning_Management_System.Controllers
                     }
                     else
                     {
-                        string errorMess = $"You registered {exist_enroll.course.CourseTitle}";
+                        string errorMess = $"{exist_enroll.course.CourseTitle}";
                         listError.Add(errorMess);
                         
                     }
@@ -117,13 +118,13 @@ namespace Learning_Management_System.Controllers
                 user.Role = 2;
                 user.IsStudent = true;
                 _context.SaveChanges();
-                return RedirectToAction("PaymentSuccess");
+                TempData.Clear();
+                return RedirectToAction("PaymentSuccess", new { listError = listError });
             }
         }
-
-        public IActionResult PaymentSuccess()
+        public IActionResult PaymentSuccess(List<string>? listError)
         {
-            return View();
+            return View(listError);
         }
         public IActionResult AddToWishList()
         {

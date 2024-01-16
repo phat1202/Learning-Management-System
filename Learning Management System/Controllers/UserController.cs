@@ -30,6 +30,11 @@ namespace Learning_Management_System.Controllers
         }
         public IActionResult Login()
         {
+            var userLogin = User.Identity.IsAuthenticated;
+            if (userLogin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             HttpContext.Session.SetString("ReturnUrl", Request.Headers["Referer"].ToString());
             return View();
         }
@@ -88,15 +93,6 @@ namespace Learning_Management_System.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var returnUrl = HttpContext.Session.GetString("ReturnUrl");
             return RedirectToAction("Login");
-            HttpContext.Session.Remove("ReturnUrl");
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-                return Redirect("/");
-            }
-            else
-            {
-                return Redirect(returnUrl);
-            }
         }
         public IActionResult Register()
         {

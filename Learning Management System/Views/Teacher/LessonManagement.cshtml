@@ -12,12 +12,12 @@
                         <tr>
                             <!-- Set columns width -->
                             <th class="text-center py-3 px-4" style="min-width: 400px;">Lessons</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Edit</th>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Edit</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @if(Model.Count > 0)
+                        @if (Model.Count > 0)
                         {
                             @foreach (var item in Model)
                             {
@@ -26,7 +26,7 @@
                                         <div class="media align-items-center">
                                             <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId">
                                                 <img src="~/img/play-button_4345750.png" class="d-block ui-w-40 ui-bordered mr-4" alt="">
-                                             </a>
+                                            </a>
                                             <div class="media-body">
                                                 <a asp-action="LessonManagement" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId" class="d-block text-dark">@item.LessonName</a>
                                                 <small>
@@ -36,7 +36,9 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-right font-weight-semibold align-middle p-4">Edit</td>
+                                    <td class="text-center font-weight-semibold align-middle p-4">
+                                        <a asp-action="EditLesson" asp-controller="Teacher" asp-route-lessonId="@item.LessonId">Edit</a>
+                                    </td>
                                 </tr>
                             }
                         }

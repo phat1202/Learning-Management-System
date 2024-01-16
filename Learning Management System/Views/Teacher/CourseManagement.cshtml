@@ -8,11 +8,12 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered m-0">
+                    <a class="d-block text-dark" asp-action="EditCourse" asp-controller="Teacher" asp-route-courseId="@Model.First().course.CourseId">Edit Course</a>
                     <thead>
                         <tr>
                             <!-- Set columns width -->
                             <th class="text-center py-3 px-4" style="min-width: 400px;">Chapters</th>
-                            <th class="text-right py-3 px-4" style="width: 100px;">Edit</th>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +33,9 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-right font-weight-semibold align-middle p-4">Edit</td>
+                                <td class="text-center font-weight-semibold align-middle p-4">
+                                    <a class="d-block text-dark" asp-action="EditChapter" asp-controller="Teacher" asp-route-chapterId="@item.ChapterId">Edit</a>
+                                </td>
                             </tr>
                         }
                         <tr>

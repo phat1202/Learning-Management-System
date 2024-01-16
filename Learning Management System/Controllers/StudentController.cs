@@ -36,6 +36,7 @@ namespace Learning_Management_System.Controllers
         public IActionResult LessonDetail(int chapterId)
         {
             var lessons = _context.Lessons.Where(l => l.ChapterId == chapterId)
+                                            .Include(c => c.chapter.course)
                                             .Include(c => c.chapter)
                                             .ToList();
             return View(lessons);

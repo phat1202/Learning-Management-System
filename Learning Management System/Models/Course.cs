@@ -31,6 +31,7 @@ namespace Learning_Management_System.Models
         [Key]
         public int? ChapterId { get; set; }
         public string? ChapterTitle { get; set; }
+        public int? ChapterNumber {  get; set; }
         public int? CourseId { get; set; }
         [ForeignKey("CourseId")]
         [Required]
@@ -43,6 +44,7 @@ namespace Learning_Management_System.Models
         [Key]
         public int? LessonId { get; set; }
         public string? LessonName { get; set; }
+        public int? LessonNumber { get; set; }
         public int? ChapterId { get; set; }
         public string? ContentUrl { get; set; }
         [ForeignKey(nameof(Chapter.ChapterId))]

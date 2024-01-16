@@ -1,4 +1,5 @@
-﻿using Learning_Management_System.Extensions;
+﻿using CloudinaryDotNet.Actions;
+using Learning_Management_System.Extensions;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -76,6 +77,29 @@ namespace Learning_Management_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("CreateNewChapter", new { courseId = newCourse.CourseId});
         }
+        //Edit Course
+        public IActionResult EditCourse(int courseId)
+        {
+            var courseEdit = _context.Courses.First(c => c.CourseId == courseId);
+            var categories = _context.CategoryCourses.ToList();
+            categories.Insert(0, new CategoryCourse()
+            {
+                CategoryName = "Select Category",
+                CategoryId = -1
+            });
+            ViewData["CategoryId"] = new SelectList(categories, "CategoryId", "CategoryName", -1);
+            return View(courseEdit);
+        }
+        [HttpPost]
+        public IActionResult EditCourse(Course course)
+        {
+            var course_Exist = _context.Courses.First(c => c.CourseId == course.CourseId);
+            course_Exist.CourseTitle = course.CourseTitle;
+            course_Exist.CourseDescription = course.CourseDescription;
+            course_Exist.CategoryId = course.CategoryId;
+            _context.SaveChanges();
+            return RedirectToAction("MyClasses");
+        }
         public IActionResult CreateNewChapter(int courseId)
         {
             TempData["CourseId"] = courseId;
@@ -88,12 +112,29 @@ namespace Learning_Management_System.Controllers
             {
                 CourseId = (int)TempData["CourseId"],
                 ChapterTitle = chapter.ChapterTitle,
+                ChapterNumber = chapter.ChapterNumber,
                 TotalNumberOfLesson = 0,
             };
             _context.Add(newChapter);
             _context.SaveChanges();
             return View();
         }
+        //EditChapter
+        public IActionResult EditChapter(int chapterId)
+        {
+            var chapterEdit = _context.Chapters.First(c => c.ChapterId == chapterId);
+            return View(chapterEdit);
+        }
+        [HttpPost]
+        public IActionResult EditChapter(Chapter chapter)
+        {
+            var chapter_Exist = _context.Chapters.First(c => c.ChapterId == chapter.ChapterId);
+            chapter_Exist.ChapterTitle = chapter.ChapterTitle;
+            chapter_Exist.ChapterNumber = chapter.ChapterNumber;
+            _context.SaveChanges();
+            return RedirectToAction("MyClasses");
+        }
+        //CreateNewLesson
         public IActionResult CreateNewLesson(int chapterId)
         {
             TempData["ChapterId"] = chapterId;
@@ -114,12 +155,34 @@ namespace Learning_Management_System.Controllers
             {
                 ChapterId = chapterId,
                 LessonName = lesson.LessonName,
+                LessonNumber = lesson.LessonNumber,
                 ContentUrl = uploaded
             };           
             await _context.AddAsync(newLesson);
             chapter.TotalNumberOfLesson++;
             await _context.SaveChangesAsync();
             return View();
+        }
+        //EditLesson
+        public IActionResult EditLesson(int lessonId)
+        {
+            var chapterEdit = _context.Lessons.First(c => c.LessonId == lessonId);
+            return View(chapterEdit);
+        }
+        [HttpPost]
+        public IActionResult EditLesson(Lesson lesson, IFormFile? Video)
+        {
+            var uploadVideo = new FileUpLoading();
+            var lesson_Exist = _context.Lessons.First(c => c.LessonId == lesson.LessonId);
+            if (Video != null)
+            {
+                var uploaded = uploadVideo.UploadVideo(Video);
+                lesson_Exist.ContentUrl = uploaded;
+            }
+            lesson_Exist.LessonName = lesson.LessonName;
+            lesson_Exist.LessonNumber = lesson.LessonNumber;
+            _context.SaveChanges();
+            return RedirectToAction("MyClasses");
         }
         public IActionResult CourseManagement(int courseId)
         {
@@ -136,8 +199,9 @@ namespace Learning_Management_System.Controllers
             return View(lessonList);
         }
 
-        public IActionResult MyClasses(string userId)
+        public IActionResult MyClasses()
         {
+            var userId = HttpContext.User.Claims.First().Value;
             var myClasses = _context.Courses.Where(c => c.TeacherId == userId).Include(u => u.Teacher).ToList();
             return View(myClasses);
         }
