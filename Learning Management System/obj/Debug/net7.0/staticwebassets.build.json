@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ENn6u68dww2G/wsi+F/8ocIWDDAViWtKfhQdMsFAznk=",
+  "Hash": "K85Z5nMi3pza95hy5GaqdEroAFqHnwLxplEQm2z6D5Y=",
   "Source": "Learning Management System",
   "BasePath": "_content/Learning Management System",
   "Mode": "Default",
@@ -186,6 +186,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\cart.css"
+    },
+    {
+      "Identity": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\comment.css",
+      "SourceId": "Learning Management System",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\",
+      "BasePath": "_content/Learning Management System",
+      "RelativePath": "css/comment.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\comment.css"
     },
     {
       "Identity": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\coursedetail.css",

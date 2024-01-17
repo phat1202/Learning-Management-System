@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\css\\cart.css"
     },
     {
+      "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\comment.css",
+      "PackagePath": "staticwebassets\\css\\comment.css"
+    },
+    {
       "Id": "C:\\Users\\trgta\\OneDrive\\Desktop\\C#\\PP\\Learning-Management-System\\Learning Management System\\wwwroot\\css\\coursedetail.css",
       "PackagePath": "staticwebassets\\css\\coursedetail.css"
     },

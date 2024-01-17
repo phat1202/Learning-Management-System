@@ -184,18 +184,21 @@ namespace Learning_Management_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("MyClasses");
         }
+        //Index
         public IActionResult CourseManagement(int courseId)
         {
             ViewData["CourseId"] = courseId;
             var course = _context.Chapters.Where(c => c.course.CourseId == courseId)
                                           .Include(co => co.course)
-                                          .Include(u => u.course.Teacher).ToList();
+                                          .Include(u => u.course.Teacher)
+                                           .OrderBy(c => c.ChapterNumber).ToList();
             return View(course);
         }
         public IActionResult LessonManagement(int chapterId)
         {
             ViewData["ChapterId"] = chapterId;
-            var lessonList = _context.Lessons.Where(l => l.ChapterId == chapterId).Include(c => c.chapter).ToList();
+            var lessonList = _context.Lessons.Where(l => l.ChapterId == chapterId).Include(c => c.chapter)
+                                                .OrderBy(l => l.LessonNumber).ToList();
             return View(lessonList);
         }
 

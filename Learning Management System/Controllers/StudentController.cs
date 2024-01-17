@@ -17,7 +17,8 @@ namespace Learning_Management_System.Controllers
         }
         public IActionResult MyLearning(string userId)
         {
-            var result = _context.Enrollments.Where(learnings => learnings.UserId == userId)
+            var result = _context.Enrollments
+                .Where(learnings => learnings.UserId == userId)
                 .Include(c => c.course.Teacher)
                 .Include(c => c.course)
                 .Include(u => u.user)
@@ -30,7 +31,8 @@ namespace Learning_Management_System.Controllers
             ViewData["CourseId"] = courseId;
             var course = _context.Chapters.Where(c => c.course.CourseId == courseId)
                                           .Include(co => co.course)
-                                          .Include(u => u.course.Teacher).ToList();
+                                          .Include(u => u.course.Teacher)
+                                          .OrderBy(c => c.ChapterNumber).ToList();
             return View(course);
         }
         public IActionResult LessonDetail(int chapterId)
@@ -38,7 +40,7 @@ namespace Learning_Management_System.Controllers
             var lessons = _context.Lessons.Where(l => l.ChapterId == chapterId)
                                             .Include(c => c.chapter.course)
                                             .Include(c => c.chapter)
-                                            .ToList();
+                                             .OrderBy(l => l.LessonNumber).ToList();
             return View(lessons);
         }
         [HttpPost]

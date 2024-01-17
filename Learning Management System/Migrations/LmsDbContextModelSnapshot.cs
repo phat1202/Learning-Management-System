@@ -101,6 +101,9 @@ namespace Learning_Management_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("ChapterNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("ChapterTitle")
                         .HasColumnType("longtext");
 
@@ -116,6 +119,30 @@ namespace Learning_Management_System.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Chapters");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.CommentLesson", b =>
+                {
+                    b.Property<int?>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentComment")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommentLessons");
                 });
 
             modelBuilder.Entity("Learning_Management_System.Models.Course", b =>
@@ -195,6 +222,9 @@ namespace Learning_Management_System.Migrations
 
                     b.Property<string>("LessonName")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("LessonNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("LessonId");
 
@@ -345,6 +375,21 @@ namespace Learning_Management_System.Migrations
                         .IsRequired();
 
                     b.Navigation("course");
+                });
+
+            modelBuilder.Entity("Learning_Management_System.Models.CommentLesson", b =>
+                {
+                    b.HasOne("Learning_Management_System.Models.Lesson", "lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId");
+
+                    b.HasOne("Learning_Management_System.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("lesson");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Learning_Management_System.Models.Course", b =>

@@ -22,10 +22,11 @@ namespace Learning_Management_System.Models
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<CommentLesson> CommentLessons {  get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
-            optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=lmsdb;username=root;Password=123456;");
+            optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=lms_dbcontext;username=root;Password=123456;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -122,6 +122,13 @@ namespace Learning_Management_System.Controllers
                 return RedirectToAction("PaymentSuccess", new { listError = listError });
             }
         }
+        [HttpPost]
+        public IActionResult AddComment(string comment)
+        {
+            var a = 2; 
+            var b = 3;
+            return Json(comment);
+        }
         public IActionResult PaymentSuccess(List<string>? listError)
         {
             return View(listError);
