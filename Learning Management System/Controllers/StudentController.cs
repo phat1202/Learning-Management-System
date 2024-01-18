@@ -1,4 +1,5 @@
 ﻿using Learning_Management_System.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,7 +53,8 @@ namespace Learning_Management_System.Controllers
 
                 if (lesson != null)
                 {
-                    return Json(new { success = true, contentUrl = lesson.ContentUrl });
+                    HttpContext.Session.SetInt32("LessonId", lesson.LessonId ?? 0);
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl, Id = lesson.LessonId });
                 }
                 else
                 {

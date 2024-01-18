@@ -15,6 +15,7 @@ namespace Learning_Management_System.Models
         public int? StarRate { get; set; }
         [MaxLength(255)]
         public string? Comment { get; set; }
+        public DateTime? CommentedAt { get; set; } = DateTime.Now;
     }
     public class CommentLesson
     {
@@ -27,6 +28,7 @@ namespace Learning_Management_System.Models
         public Lesson? lesson { get; set; }
         [ForeignKey(nameof(UserId))]
         public User? user { get; set; }
+        public DateTime? CommentedAt { get; set; } = DateTime.Now;
     }
     public class Reply
     {
@@ -37,5 +39,6 @@ namespace Learning_Management_System.Models
         public string? UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public User? user { get; set; }
+        public DateTime? CommentedAt { get; set; } = DateTime.Now;
     }
 }
