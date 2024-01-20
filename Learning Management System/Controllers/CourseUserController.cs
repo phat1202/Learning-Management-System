@@ -122,7 +122,28 @@ namespace Learning_Management_System.Controllers
                 return RedirectToAction("PaymentSuccess", new { listError = listError });
             }
         }
-
+        //AddComment
+        public IActionResult AddComment(string comment)
+        {
+            var lessonId = HttpContext.Session.GetInt32("LessonId");
+            var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == lessonId);
+            if (lesson == null)
+            {
+                lessonId = 1;
+            }
+            var userId = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userId);
+            var newComment = new CommentLesson
+            {
+                UserId = user.UserId,
+                StudentComment = comment,
+                CommentedAt = DateTime.Now,
+                LessonId = lessonId,
+            };
+            //_context.Add(newComment);
+            //_context.SaveChanges();
+            return Json(new { success = true, contentUrl = lesson.ContentUrl });
+        }
         public IActionResult PaymentSuccess(List<string>? listError)
         {
             return View(listError);
