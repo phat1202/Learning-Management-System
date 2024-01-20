@@ -20,7 +20,6 @@
                     if (result.success) {
                         var lessonContentUrl = result.contentUrl;
                         updateVideo(lessonContentUrl);
-                        updateComment(itemLessonId);
                     } else {
                         console.error('Error getting Lesson ID: ' + result.errorMessage);
                     }
@@ -37,12 +36,12 @@
             }
         }
         // Update Comment///
-        function updateComment(itemLessonId) {
+        // function updateComment(itemLessonId) {
 
-            var section = document.getElementById('commentsContainer');
-            if (section) {
-                $('#commentsContainer').html(data);
-            }
+        //     var section = document.getElementById('commentsContainer');
+        //     if (section) {
+        //         $('#commentsContainer').html(data);
+        //     }
 
         }
         // $(document).ready(function () {
@@ -68,31 +67,35 @@
             });
         });
 
-        $(document).ready(function () {
-            function addComment() {
-                var comment = $("textarea[name='comment']").val();
-                $.post({
-                    url: "/Student/AddComment",
-                    data: { comment: comment },
-                    success: function (response) {
-                        if (response.success) {
-                            // location.reload();
-                            var lessonContentUrl = response.contentUrl;
-                            updateVideo(lessonContentUrl);
+        // $(document).ready(function () {
+        //     function addComment() {
+        //         var comment = $("textarea[name='comment']").val();
+        //         $.post({
+        //             url: "/Student/AddComment",
+        //             data: { comment: comment },
+        //             success: function (response) {
+        //                 if (response.success) {
+        //                     // location.reload();
+        //                     var lessonContentUrl = response.contentUrl;
+        //                     updateVideo(lessonContentUrl);
 
-                        } else {
-                            console.error("Error adding comment: " + response.errorMessage);
-                        }
-                    },
-                    error: function (error) {
-                        console.error("Ajax request failed:", error);
-                    }
-                });
-            }
-            $("#submitCommentBtn").on("click", function () {
-                addComment();
-            });
-        });
+        //                 } else {
+        //                     console.error("Error adding comment: " + response.errorMessage);
+        //                 }
+        //             },
+        //             error: function (error) {
+        //                 console.error("Ajax request failed:", error);
+        //             }
+        //         });
+        //     }
+        //     $("#submitCommentBtn").on("click", function () {
+        //         addComment();
+        //     });
+        //     // $("#submitCommentBtn").on("click", function () {
+        //     //     var lessonId = $(this).data("lessonid");
+        //     //     addComment(lessonId);
+        //     // });
+        // });
     </script>
     @if (Model != null)
     {
@@ -201,9 +204,9 @@
                                                         <!-- Input for new comment -->
                                                         <form id="addCommentForm" class="mt-3">
                                                             <div class="mb-3">
-                                                                <textarea name="comment" placeholder="Your Comment" class="form-control" rows="3"></textarea>
+                                                                <textarea  name="comment" placeholder="Your Comment" class="form-control" rows="3"></textarea>
                                                             </div>
-                                                            <button id="submitCommentBtn" type="submit" class="btn btn-primary">Submit</button>
+                                                            <button  id="submitCommentBtn" type="submit" class="btn btn-primary">Submit</button>
                                                         </form>
 
                                                     </div>

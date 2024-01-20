@@ -88,6 +88,7 @@ namespace Learning_Management_System.Controllers
             //_context.Add(newComment);
             //_context.SaveChanges();
             return Json(new { success = true, contentUrl = lesson.ContentUrl });
+           // return RedirectToAction("GetLessonId", new { itemLessonId = lessonId});
         }
         [HttpPost]
         public IActionResult GetComments(int itemLessonId)
