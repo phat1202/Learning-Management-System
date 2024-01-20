@@ -50,11 +50,34 @@ namespace Learning_Management_System.Controllers
             try
             {
                 var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == itemLessonId);
-
+                var comments = _context.CommentLessons.Include(u => u.user).Where(c => c.LessonId == itemLessonId).ToList();
                 if (lesson != null)
                 {
                     HttpContext.Session.SetInt32("LessonId", lesson.LessonId ?? 0);
-                    return Json(new { success = true, contentUrl = lesson.ContentUrl, Id = lesson.LessonId });
+                    //Html Code
+                    foreach (var cmt in comments)
+                    {
+                        var HtmlCode = $@"<div class=""d-flex flex-start"">
+                               <img class=""rounded-circle shadow-1-strong me-3""
+                                    src=""{cmt.user.Avatar}"" alt=""avatar"" width=""50""
+                                    height=""50"" />
+                               <div class=""flex-grow-1 flex-shrink-1"">
+                                   <div>
+                                       <div class=""d-flex justify-content-between align-items-center"">
+                                           <p class=""mb-1"">
+                                               {cmt.user.UserName} <span class=""small"">- 2 hours ago</span>
+                                           </p>
+                                           <a href=""#!"" class=""reply-link""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
+                                       </div>
+                                       <p class=""small mb-0"">
+                                           It is a long established fact that a reader will be distracted by
+                                           the readable content of a page.
+                                       </p>
+                                   </div>
+                               </div>
+                           </div>";
+                    }
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl });
                 }
                 else
                 {
@@ -65,6 +88,28 @@ namespace Learning_Management_System.Controllers
             {
                 return Json(new { success = false, errorMessage = ex.Message });
             }
+        }
+        //AddComment
+        public IActionResult AddComment(string comment)
+        {
+            var lessonId = HttpContext.Session.GetInt32("LessonId");
+            var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == lessonId);
+            if (lesson == null)
+            {
+                lessonId = 1;
+            }
+            var userId = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userId);
+            var newComment = new CommentLesson
+            {
+                UserId = user.UserId,
+                StudentComment = comment,
+                CommentedAt = DateTime.Now,
+                LessonId = lessonId,
+            };
+            //_context.Add(newComment);
+            //_context.SaveChanges();
+            return Json(new { success = true, contentUrl = lesson.ContentUrl });
         }
     }
 }

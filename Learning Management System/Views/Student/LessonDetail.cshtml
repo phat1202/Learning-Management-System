@@ -9,6 +9,7 @@
 <body>
     <script>
         function getLessonId(itemLessonId) {
+
             $.ajax({
                 url: '/Student/GetLessonId',
                 type: 'POST',
@@ -19,6 +20,16 @@
                     if (result.success) {
                         var lessonContentUrl = result.contentUrl;
                         updateVideo(lessonContentUrl);
+
+                        //Doi Mau
+                        var targets = document.querySelectorAll('[id^="changecolorLesson_"]');
+                        targets.forEach(function (target) {
+                            target.style.color = '#495057';
+                        });
+                        var linkId = 'changecolorLesson_' + itemLessonId;
+                        var link = document.getElementById(linkId);
+                        link.style.color = '#fd7e14';
+
                     } else {
                         console.error('Error getting Lesson ID: ' + result.errorMessage);
                     }
@@ -35,7 +46,9 @@
                 videoIframe.src = contentUrl;
             }
         }
-
+        // document.getElementById('changeableLink').addEventListener('click', function () {
+        //     this.style.color = '#fd7e14';
+        // });
         //Comment//
         document.addEventListener("DOMContentLoaded", function () {
             var replyLink = document.querySelector(".reply-link");
@@ -53,8 +66,9 @@
                 var comment = $("textarea[name='comment']").val();
 
                 // Make the Ajax request
-                $.post({
-                    url: "/CourseUser/AddComment",
+                $.ajax({
+                    url: "/Student/AddComment",
+                    type: 'POST',
                     data: { comment: comment },
                     success: function (response) {
                         if (response.success) {
@@ -102,12 +116,10 @@
                                     number++;
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                        <a href="javascript:void(0);" onclick="getLessonId(@item.LessonId)" class="text-decoration-none h6 m-0">@number. @item.LessonName</a>
+                                        <a href="javascript:void(0);" onclick="getLessonId(@item.LessonId)" id="changecolorLesson_@item.LessonId" class="text-decoration-none h6 m-0">@number. @item.LessonName</a>
 
                                     </li>
                                     lessonId = item.LessonId;
-
-
                                 }
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0"></li>
 
@@ -115,8 +127,8 @@
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <h5>@lesson.LessonName</h5>
-                        <div class="embed-responsive embed-responsive-16by9">
+                        @*                         <h5>@lesson.LessonName</h5>
+                    *@                        <div class="embed-responsive embed-responsive-16by9">
                             <iframe id="videoIframe" class="embed-responsive-item" src="@lesson.ContentUrl" allowfullscreen>
                             </iframe>
 
@@ -132,7 +144,7 @@
                                             <div class="card-body p-4">
                                                 <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
                                                 <div class="row">
-                                                    <div class="col">
+                                                    <div class="col" id ="LessonCommentSection">
                                                         <!-- Comment -->
                                                         @foreach (var cmt in comments)
                                                         {

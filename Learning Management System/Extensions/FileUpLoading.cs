@@ -35,7 +35,8 @@ namespace Learning_Management_System.Extensions
                 //EagerNotificationUrl = "https://mysite.example.com/my_notification_endpoint"
             };
             var uploadResult = cloudinary.Upload(uploadParams);
-            return "Ok";
+            var videoUrl = uploadResult.SecureUrl.OriginalString.ToString();
+            return videoUrl;
         }
     }
 }
