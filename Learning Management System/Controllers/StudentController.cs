@@ -50,11 +50,11 @@ namespace Learning_Management_System.Controllers
             try
             {
                 var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == itemLessonId);
-
+                var comments = _context.CommentLessons.Where(c => c.LessonId == itemLessonId).ToList();
                 if (lesson != null)
                 {
                     HttpContext.Session.SetInt32("LessonId", lesson.LessonId ?? 0);
-                    return Json(new { success = true, contentUrl = lesson.ContentUrl, Id = lesson.LessonId });
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl, Id = lesson.LessonId, listComments = comments });
                 }
                 else
                 {
@@ -65,6 +65,36 @@ namespace Learning_Management_System.Controllers
             {
                 return Json(new { success = false, errorMessage = ex.Message });
             }
+        }
+        //AddComment
+        [HttpPost]
+        public IActionResult AddComment(string comment)
+        {
+            var lessonId = HttpContext.Session.GetInt32("LessonId");
+            if (lessonId == null)
+            {
+                lessonId = 1;
+            }
+            var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == lessonId);
+            var userId = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userId);
+            var newComment = new CommentLesson
+            {
+                UserId = user.UserId,
+                StudentComment = comment,
+                CommentedAt = DateTime.Now,
+                LessonId = lessonId,
+            };
+            //_context.Add(newComment);
+            //_context.SaveChanges();
+            return Json(new { success = true, contentUrl = lesson.ContentUrl });
+        }
+        [HttpPost]
+        public IActionResult GetComments(int itemLessonId)
+        {
+            var comments = _context.CommentLessons.Include(u => u.user).Where(c => c.LessonId == itemLessonId).ToList();
+            return PartialView("CommentBox_PartialView", comments);
+            //return Json(new { success = true, comments });
         }
     }
 }
