@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Learning Management System.props" />
-</Project>
