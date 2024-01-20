@@ -1,0 +1,42 @@
+﻿@model Learning_Management_System.Models.Course
+
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;"></h5>
+            <h1>Edit Course</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form bg-secondary rounded p-5">
+
+                    <form asp-action="EditCourse" asp-controller="Teacher">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Course Title</label>
+                            <input asp-for="CourseTitle" type="text" class="form-control" id="name" placeholder="Course Title" required="required" data-validation-required-message="Please enter your name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Course Description</label>
+                            <textarea asp-for="CourseDescription" type="text" class="form-control" placeholder="Description" required="required"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <select asp-for="CategoryId" asp-items="@ViewBag.CategoryId" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">$</span>
+                                </div>
+                                <input asp-for="Price" type="number" placeholder="How much is your Course?" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <span class="alert-danger">@Html.ValidationSummary()</span>
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <button type="submit" class="btn btn-primary">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
