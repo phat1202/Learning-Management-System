@@ -23,6 +23,7 @@ namespace Learning_Management_System.Models
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<CommentLesson> CommentLessons {  get; set; }
+        public DbSet<Reply> RepliesComments { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
