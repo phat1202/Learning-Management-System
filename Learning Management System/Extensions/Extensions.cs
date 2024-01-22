@@ -19,17 +19,17 @@ namespace Learning_Management_System.Extensions
                 if (timeDifference.TotalDays >= 1)
                 {
                     int days = (int)timeDifference.TotalDays;
-                    return days == 1 ? "1 day ago" : $"{days} days ago";
+                    return days == 1 ? "1 day" : $"{days} days";
                 }
                 else if (timeDifference.TotalHours >= 1)
                 {
                     int hours = (int)timeDifference.TotalHours;
-                    return hours == 1 ? "1 hour ago" : $"{hours} hours ago";
+                    return hours == 1 ? "1 hour" : $"{hours} hours";
                 }
                 else if (timeDifference.TotalMinutes >= 1)
                 {
                     int minutes = (int)timeDifference.TotalMinutes;
-                    return minutes == 1 ? "1 minute ago" : $"{minutes} minutes ago";
+                    return minutes == 1 ? "1 minute" : $"{minutes} minutes";
                 }
                 else
                 {

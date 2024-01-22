@@ -60,42 +60,11 @@ namespace Learning_Management_System.Controllers
                     //Html Code
                     foreach (var cmt in comments)
                     {
-                        var commentReply = new List<string>();
                         int i = 1;
-                        i++;
+
+                        var commentReply = new List<string>();
                         var Replies = _context.RepliesComments.Include(u => u.user).Where(c => c.CommentId == cmt.CommentId);
-                       
-                        //Comment 
-                        var HtmlCode = $@"<div class=""d-flex flex-start"">
-                               <img class=""rounded-circle shadow-1-strong me-3""
-                                    src=""{cmt.user.Avatar}"" alt=""avatar"" width=""50""
-                                    height=""50"" />
-                               <div class=""flex-grow-1 flex-shrink-1"" id=""CommentParent"">
-                                   <div>
-                                       <div class=""d-flex justify-content-between align-items-center"">
-                                           <p class=""mb-1"">
-                                               {cmt.user.UserName} <span class=""small"">{Extensions.Extensions.GetRelativeTime(cmt.CommentedAt)}</span>
-                                           </p>
-                                           <a href=""#!"" class=""reply-link""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
-                                       </div>
-                                       <p class=""small mb-0"">
-                                           {cmt.StudentComment}
-                                       </p>
-                                   </div>
-
-
-                               </div>
-                            </div>
-
-
-                            ";
-                        //< div id = ""CommentSecId_{ i}
-                        //"" >
-
-                        //            </ div >
-                        commentSection.Add(HtmlCode);
-                        //Replies
-                        foreach (var reply in Replies)
+                        foreach (var reply in Replies.OrderBy(t => t.CommentedAt))
                         {
                             var htmlReplyCode = $@"<div class=""d-flex flex-start mt-4"">
                                             <a class=""me-3"" href=""#"">
@@ -115,12 +84,75 @@ namespace Learning_Management_System.Controllers
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>";
+                                        </div>
+
+                                        <hr/>";
                             commentReply.Add(htmlReplyCode);
 
                         }
 
+                        //Comment 
 
+                        var HtmlCode = $@"<div class=""d-flex flex-start"">
+                               <img class=""rounded-circle shadow-1-strong me-3""
+                                    src=""{cmt.user.Avatar}"" alt=""avatar"" width=""50""
+                                    height=""50"" />
+                               <div class=""flex-grow-1 flex-shrink-1"" id=""CommentParent"">
+                                   <div>
+                                       <div class=""d-flex justify-content-between align-items-center"">
+                                           <p class=""mb-1"">
+                                               {cmt.user.UserName} <span class=""small"">{Extensions.Extensions.GetRelativeTime(cmt.CommentedAt)}</span>
+                                           </p>
+                                           <a href=""#!"" id=""reply-link-id-{i}""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
+                                       </div>
+                                       <p class=""small mb-0"">
+                                           {cmt.StudentComment}
+                                       </p>
+                                   </div>
+                                    {string.Join("", commentReply)}
+                                    <form id=""reply-form-id-{i}"" class=""mt-3 reply-form"" style=""display: none;"">
+                                           <div class=""input-group mb-3"">
+                                                <textarea type=""text"" class=""form-control"" id=""newComment"" placeholder=""Reply this comment""></textarea>
+                                            </div>
+                                            <a href=""#"" class=""btn btn-sm btn-primary"">Submit</a>
+                                    </form>
+                               </div>
+                            </div>
+
+                            <hr/>
+                            ";
+                        commentSection.Add(HtmlCode);
+
+                        //else
+                        //{
+                        //    var HtmlCode = $@"<div class=""d-flex flex-start"">
+                        //       <img class=""rounded-circle shadow-1-strong me-3""
+                        //            src=""{cmt.user.Avatar}"" alt=""avatar"" width=""50""
+                        //            height=""50"" />
+                        //       <div class=""flex-grow-1 flex-shrink-1"" id=""CommentParent"">
+                        //           <div>
+                        //               <div class=""d-flex justify-content-between align-items-center"">
+                        //                   <p class=""mb-1"">
+                        //                       {cmt.user.UserName} <span class=""small"">{Extensions.Extensions.GetRelativeTime(cmt.CommentedAt)}</span>
+                        //                   </p>
+                        //                   <a href=""#!"" class=""reply-link""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
+                        //               </div>
+                        //               <p class=""small mb-0"">
+                        //                   {cmt.StudentComment}
+                        //               </p>
+                        //           </div>
+
+                        //       </div>
+                        //    </div>
+
+
+                        //    ";
+                        //    commentSection.Add(HtmlCode);
+                        //}
+
+
+
+                        i++;
                     }
                     return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection });
                 }

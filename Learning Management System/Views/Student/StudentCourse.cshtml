@@ -18,6 +18,7 @@
                         @foreach (var item in Model)
                         {
                             var NumberStudent = db.Enrollments.Count(student => student.CourseId == item.CourseId);
+                            var numberLesson = db.Lessons.Count(l => l.ChapterId == item.ChapterId);
                             <tr>
                                 <td class="p-4">
                                     <div class="media align-items-center">
@@ -25,7 +26,7 @@
                                         <div class="media-body">
                                             <a asp-action="LessonDetail" asp-controller="Student" asp-route-chapterId="@item.ChapterId" class="d-block text-dark">@item.ChapterTitle</a>
                                             <small>
-                                                <small class="m-0">Lectures: @item.TotalNumberOfLesson</small> &nbsp;
+                                                <small class="m-0">Lectures: @numberLesson</small> &nbsp;
                                                 <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>@NumberStudent</small> &nbsp;
                                             </small>
                                         </div>
