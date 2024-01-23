@@ -49,6 +49,7 @@ namespace Learning_Management_System.Models
         public string? ContentUrl { get; set; }
         [ForeignKey(nameof(Chapter.ChapterId))]
         public Chapter? chapter { get; set; }
+        public double? TimeDuration { get; set; }
 
     }
 }

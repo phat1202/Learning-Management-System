@@ -18,7 +18,7 @@ namespace Learning_Management_System.Extensions
             var imageUrl = result.SecureUrl.OriginalString.ToString();
             return imageUrl;
         }
-        public string UploadVideo(IFormFile? imageFile)
+        public (string, double) UploadVideo(IFormFile? imageFile)
         {
             using var stream = imageFile.OpenReadStream();
             var account = new Account("dqnsplymn", "279175116359664", "Oii8kBOmGAaOw_Wadnp0Rwc9oFk");
@@ -36,7 +36,9 @@ namespace Learning_Management_System.Extensions
             };
             var uploadResult = cloudinary.Upload(uploadParams);
             var videoUrl = uploadResult.SecureUrl.OriginalString.ToString();
-            return videoUrl;
+            var timeDuration = Math.Round(uploadResult.Duration);
+            //var time = Math.Round(timeDuration);
+            return (videoUrl, timeDuration);
         }
     }
 }

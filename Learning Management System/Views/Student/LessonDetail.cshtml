@@ -106,6 +106,46 @@
             });
         });
 
+        //Track qua trinh hoc
+        // function setRequiredDuration(lessonId) {
+        //     var video = document.querySelector('iframe');
+        //     var completionStatusElement = document.getElementById('completionStatus_' + lessonId);
+
+        //     // Set the required duration to 90% of the video's total duration
+        //     var requiredDuration = video.duration * 0.9;
+        //
+       
+        // function setRequiredDuration(lessonId) {
+        //     var video = document.getElementById('videoIframe');
+        //     var completionStatusElement = document.getElementById('completionStatus_' + lessonId);
+        //     var requiredDurationElement = document.getElementById('requiredDuration_' + lessonId);
+        //     // Set the required duration to 90% of the video's total duration
+        //     var requiredDuration = video.duration * 0.9;
+        //     requiredDurationElement.textContent = 'Required Duration: ' + requiredDuration + ' seconds';
+        //     // Check if the current playback time is greater than or equal to the required duration
+        //     function checkVideoProgress() {
+        //         if (video.currentTime >= requiredDuration) {
+        //             // Use Ajax to send a request to the server to mark the video as completed
+        //             $.ajax({
+        //                 url: '@Url.Action("MarkVideoComplete", "Lesson")',
+        //                 type: 'POST',
+        //                 data: { lessonId: lessonId },
+        //                 success: function (data) {
+        //                     // Update the UI to reflect the completion status
+        //                     completionStatusElement.textContent = 'Video Completed';
+        //                     // Remove the event listener after completion to avoid unnecessary checks
+        //                     video.removeEventListener('timeupdate', checkVideoProgress);
+        //                 },
+        //                 error: function () {
+        //                     console.error('Error marking video as completed');
+        //                 }
+        //             });
+        //         }
+        //     }
+
+        //     // Add event listener for time updates
+        //     video.addEventListener('timeupdate', checkVideoProgress);
+        // }
 
     </script>
     @if (Model != null)
@@ -128,8 +168,9 @@
                                     number++;
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    
                                         <a href="javascript:void(0);" onclick="getLessonId(@item.LessonId)" id="changecolorLesson_@item.LessonId" class="text-decoration-none h6 m-0">@number. @item.LessonName</a>
-
+                                        <input class="shop-tooltip close float-none text-danger" type="checkbox" checked disabled />
                                     </li>
                                     lessonId = item.LessonId;
                                 }
@@ -142,8 +183,10 @@
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe id="videoIframe" class="embed-responsive-item" src="@lesson.ContentUrl" allowfullscreen>
                             </iframe>
-
+                            
                         </div>
+                        <span id="requiredDuration_@lesson.LessonId"></span>    
+
                         <hr />
                         <!-- Comment Table -->
 

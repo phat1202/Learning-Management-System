@@ -156,7 +156,8 @@ namespace Learning_Management_System.Controllers
                 ChapterId = chapterId,
                 LessonName = lesson.LessonName,
                 LessonNumber = lesson.LessonNumber,
-                ContentUrl = uploaded
+                ContentUrl = uploaded.Item1,
+                TimeDuration = uploaded.Item2,
             };           
             await _context.AddAsync(newLesson);
             chapter.TotalNumberOfLesson++;
@@ -177,7 +178,8 @@ namespace Learning_Management_System.Controllers
             if (Video != null)
             {
                 var uploaded = uploadVideo.UploadVideo(Video);
-                lesson_Exist.ContentUrl = uploaded;
+                lesson_Exist.ContentUrl = uploaded.Item1;
+                lesson_Exist.TimeDuration = uploaded.Item2;
             }
             lesson_Exist.LessonName = lesson.LessonName;
             lesson_Exist.LessonNumber = lesson.LessonNumber;
