@@ -203,7 +203,6 @@ namespace Learning_Management_System.Controllers
                                                 .OrderBy(l => l.LessonNumber).ToList();
             return View(lessonList);
         }
-
         public IActionResult MyClasses()
         {
             var userId = HttpContext.User.Claims.First().Value;

@@ -154,7 +154,7 @@ namespace Learning_Management_System.Controllers
 
                         i++;
                     }
-                    return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection });
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection});
                 }
                 else
                 {
@@ -167,6 +167,7 @@ namespace Learning_Management_System.Controllers
             }
         }
         //AddComment
+        [HttpPost]
         public IActionResult AddComment(string comment)
         {
             var lessonId = HttpContext.Session.GetInt32("LessonId");
@@ -186,7 +187,27 @@ namespace Learning_Management_System.Controllers
             };
             //_context.Add(newComment);
             //_context.SaveChanges();
-            return Json(new { success = true, contentUrl = lesson.ContentUrl });
+            return Json(new { success = true, contentUrl = lesson.ContentUrl, chapterId = lesson.ChapterId, lessonId = lesson.LessonId });
+        }
+        public IActionResult ProgressTracking(int itemId)
+        {
+            var userId = HttpContext.User.Claims.First().Value;
+            var user = _context.Users.First(u => u.UserId == userId);
+            var lesson = _context.Lessons.FirstOrDefault(l => l.LessonId == itemId);
+            var ProgressExist = _context.StudentProgresses.FirstOrDefault(p => p.LessonId == itemId && p.UserId == userId);
+            if(ProgressExist != null)
+            {
+                ProgressExist.LastAccessed = DateTime.Now;
+                ProgressExist.CompletionStatus = "Revise";
+            }
+            var newProgress = new StudentProgress
+            {
+                UserId = userId,
+                LessonId = lesson.LessonId,
+                CompletionStatus = "OK",
+                LastAccessed = DateTime.Now,
+            };
+            return View("LessonDetail");
         }
     }
 }

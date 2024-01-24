@@ -1,4 +1,4 @@
-﻿@using Microsoft.EntityFrameworkCore
+﻿﻿@using Microsoft.EntityFrameworkCore
 @model List<Learning_Management_System.Models.Lesson>
 @inject LmsDbContext db;
 @{
@@ -31,7 +31,7 @@
                         link.style.color = '#fd7e14'; //Cam
                         //Comment
                         var receivedHtml = result.listCmtSection;
-                        $('#LessonCommentSection').prepend(receivedHtml);
+                        $('#LessonCommentSection').empty().prepend(receivedHtml);
                         //Reply
                         // var receivedReplies = result.listReplies;
                         // $('CommentSecId_').append(receivedReplies);
@@ -71,7 +71,7 @@
                 replyLink.addEventListener("click", function (event) {
                     event.preventDefault();
                     var linkId = replyLink.id;
-                    var numberId = linkId.slice(-1); 
+                    var numberId = linkId.slice(-1);
                     var replyForm = document.getElementById('reply-form-id-' + numberId);
                     console.log(numberId);
                     if (replyForm) {
@@ -90,8 +90,12 @@
                     success: function (response) {
                         if (response.success) {
                             // location.reload();
+                            var Id = response.chapterId;
+                            var vId = response.lessonId;
                             var lessonContentUrl = response.contentUrl;
                             updateVideo(lessonContentUrl);
+                            window.location.href = '/Student/LessonDetail?chapterId=' + Id;
+                            
                         } else {
                             console.error("Error adding comment: " + response.errorMessage);
                         }
@@ -105,47 +109,6 @@
                 addComment();
             });
         });
-
-        //Track qua trinh hoc
-        // function setRequiredDuration(lessonId) {
-        //     var video = document.querySelector('iframe');
-        //     var completionStatusElement = document.getElementById('completionStatus_' + lessonId);
-
-        //     // Set the required duration to 90% of the video's total duration
-        //     var requiredDuration = video.duration * 0.9;
-        //
-       
-        // function setRequiredDuration(lessonId) {
-        //     var video = document.getElementById('videoIframe');
-        //     var completionStatusElement = document.getElementById('completionStatus_' + lessonId);
-        //     var requiredDurationElement = document.getElementById('requiredDuration_' + lessonId);
-        //     // Set the required duration to 90% of the video's total duration
-        //     var requiredDuration = video.duration * 0.9;
-        //     requiredDurationElement.textContent = 'Required Duration: ' + requiredDuration + ' seconds';
-        //     // Check if the current playback time is greater than or equal to the required duration
-        //     function checkVideoProgress() {
-        //         if (video.currentTime >= requiredDuration) {
-        //             // Use Ajax to send a request to the server to mark the video as completed
-        //             $.ajax({
-        //                 url: '@Url.Action("MarkVideoComplete", "Lesson")',
-        //                 type: 'POST',
-        //                 data: { lessonId: lessonId },
-        //                 success: function (data) {
-        //                     // Update the UI to reflect the completion status
-        //                     completionStatusElement.textContent = 'Video Completed';
-        //                     // Remove the event listener after completion to avoid unnecessary checks
-        //                     video.removeEventListener('timeupdate', checkVideoProgress);
-        //                 },
-        //                 error: function () {
-        //                     console.error('Error marking video as completed');
-        //                 }
-        //             });
-        //         }
-        //     }
-
-        //     // Add event listener for time updates
-        //     video.addEventListener('timeupdate', checkVideoProgress);
-        // }
 
     </script>
     @if (Model != null)
@@ -168,7 +131,7 @@
                                     number++;
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    
+
                                         <a href="javascript:void(0);" onclick="getLessonId(@item.LessonId)" id="changecolorLesson_@item.LessonId" class="text-decoration-none h6 m-0">@number. @item.LessonName</a>
                                         <input class="shop-tooltip close float-none text-danger" type="checkbox" checked disabled />
                                     </li>
@@ -183,9 +146,9 @@
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe id="videoIframe" class="embed-responsive-item" src="@lesson.ContentUrl" allowfullscreen>
                             </iframe>
-                            
+
                         </div>
-                        <span id="requiredDuration_@lesson.LessonId"></span>    
+                        <span id="requiredDuration_@lesson.LessonId"></span>
 
                         <hr />
                         <!-- Comment Table -->
@@ -198,60 +161,61 @@
                                             <div class="card-body p-4">
                                                 <h4 class="text-center mb-4 pb-2">Comments</h4>
                                                 <div class="row">
-                                                    <div class="col" id="LessonCommentSection">
-                                                        <!-- Comment -->
-@* 
-                                                        <div class="d-flex flex-start">
-                                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="50"
-                                                                 height="50" />
-                                                            <div class="flex-grow-1 flex-shrink-1">
-                                                                <div>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <p class="mb-1">
-                                                                            Maria Smantha <span class="small">- 2 hours ago</span>
-                                                                        </p>
-                                                                        <a href="#!" class=" reply-link-id-1"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
-                                                                    </div>
-                                                                    <p class="small mb-0">
-                                                                        It is a long established fact that a reader will be distracted by
-                                                                        the readable content of a page.
-                                                                    </p>
-                                                                </div>
-                                                                <form id="reply-form-id-1" class="mt-3 reply-form" style="display: none;">
-                                                                    <div class="input-group mb-3">
-                                                                        <textarea type="text" class="form-control" id="newComment" placeholder="Reply this comment"></textarea>
-                                                                    </div>
-                                                                    <a href="#" class="btn btn-sm btn-primary">Submit</a>
-                                                                </form>
-
-                                                            </div>
+                                                    <div class="col" >
+                                                        <div id="LessonCommentSection">
                                                         </div>
+                                                        <!-- Comment -->
+                                                        @*
+                                                    <div class="d-flex flex-start">
+                                                    <img class="rounded-circle shadow-1-strong me-3"
+                                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp" alt="avatar" width="50"
+                                                    height="50" />
+                                                    <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                    Maria Smantha <span class="small">- 2 hours ago</span>
+                                                    </p>
+                                                    <a href="#!" class=" reply-link-id-1"><i class="fas fa-reply fa-xs"></i><span class="small"> reply</span></a>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                    It is a long established fact that a reader will be distracted by
+                                                    the readable content of a page.
+                                                    </p>
+                                                    </div>
+                                                    <form id="reply-form-id-1" class="mt-3 reply-form" style="display: none;">
+                                                    <div class="input-group mb-3">
+                                                    <textarea type="text" class="form-control" id="newComment" placeholder="Reply this comment"></textarea>
+                                                    </div>
+                                                    <a href="#" class="btn btn-sm btn-primary">Submit</a>
+                                                    </form>
 
-                                                        <!-- Reply -->
-                                                        <div class="d-flex flex-start mt-4">
-                                                            <a class="me-3" href="#">
-                                                                <img class="rounded-circle shadow-1-strong"
-                                                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
-                                                                     width="65" height="65" />
-                                                            </a>
-                                                            <div class="flex-grow-1 flex-shrink-1">
-                                                                <div>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <p class="mb-1">
-                                                                            Simona Disa <span class="small">- 3 hours ago</span>
-                                                                        </p>
-                                                                    </div>
-                                                                    <p class="small mb-0">
-                                                                        letters, as opposed to using 'Content here, content here',
-                                                                        making it look like readable English.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div> *@
+                                                    </div>
+                                                    </div>
+
+                                                    <!-- Reply -->
+                                                    <div class="d-flex flex-start mt-4">
+                                                    <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
+                                                    width="65" height="65" />
+                                                    </a>
+                                                    <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                    Simona Disa <span class="small">- 3 hours ago</span>
+                                                    </p>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                    letters, as opposed to using 'Content here, content here',
+                                                    making it look like readable English.
+                                                    </p>
+                                                    </div>
+                                                    </div>
+                                                    </div> *@
                                                         <!-- Reply -->
                                                         <!-- Input for reply comment -->
-
                                                         <!-- Input for new comment -->
 
                                                         <form id="addCommentForm" class="mt-3">
