@@ -6,7 +6,7 @@
     <div class="container pt-5 pb-3">
         <div class="text-center mb-5">
             <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Subjects</h5>
-            <h1>My Learnings</h1>
+            <h1>My WishList</h1>
         </div>
         <div class="row">
             @foreach (var item in Model)
@@ -15,7 +15,7 @@
                 @* var myTeacher = db.Enrollments.First(t => t.course.CourseId == ); *@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="rounded overflow-hidden mb-2">
-                        <img class="img-fluid" src="@item.course.ImageCover" alt="">
+                        <img id="img-course" src="@item.course.ImageCover" alt="">
                         <div class="bg-secondary p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <small class="m-0">@* <i class="far fa-clock text-primary mr-2"></i>*@<i class="bi bi-person"></i>Teacher: @item.course.Teacher.UserName</small>

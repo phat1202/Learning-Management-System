@@ -48,7 +48,7 @@ namespace Learning_Management_System.Controllers
                 {
                     var claims = new List<Claim>() {
                         new Claim("UserId", user.UserId),
-                        new Claim("AvatarUrl", user.Avatar),
+                        //new Claim("AvatarUrl", user.Avatar),
                         new Claim(ClaimTypes.Name, user.UserName),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, ((EnumClass.Role)user.Role).ToString())
@@ -95,7 +95,11 @@ namespace Learning_Management_System.Controllers
             return RedirectToAction("Login");
         }
         public IActionResult Register()
-        {
+        {          
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]

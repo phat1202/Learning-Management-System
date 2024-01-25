@@ -27,7 +27,7 @@
                 var courseInCategory = item.Count();
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="cat-item position-relative overflow-hidden rounded mb-2">
-                        <img class="img-fluid" src="@categoryItem.Category.CategoryImageCover" alt="">
+                        <img id="img-category" src="@categoryItem.Category.CategoryImageCover" alt="">
                         <a class="cat-overlay text-white text-decoration-none" asp-action="ViewCourseIndex" asp-controller="Home" asp-route-categoryCourse="@categoryItem.Category.CategoryId">
                             <h4 class="text-white font-weight-medium">@categoryItem.Category.CategoryName</h4>
                             <span>@courseInCategory Courses</span>

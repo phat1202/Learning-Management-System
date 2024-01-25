@@ -1,11 +1,13 @@
 ﻿@model Learning_Management_System.Models.User
+@inject LmsDbContext _db
 @{
     var modelError = Html.ValidationMessage("EditError");
 }
 <body>
     @if (Model != null)
     {
-        var avatar = User.Claims.First(c => c.Type == "AvatarUrl").Value.Replace("AvatarUrl:", "");
+        @* var avatar = User.Claims.First(c => c.Type == "AvatarUrl").Value.Replace("AvatarUrl:", ""); *@
+        var avatar = _db.Users.First(u => u.UserId == User.Claims.First().Value).Avatar;
         <section style="background-color: #eee;">
             <div class="container py-5">
                 <div class="row">
@@ -92,7 +94,7 @@
                                         </div>
                                         <div class="col-sm-9">
                                             @*                                             <p class="text-muted mb-0" id="email">@Model.Email</p> *@
-                                            <input type="text" asp-for="Email" id="EmailInput" class="form-control" value="@Model.Email">
+                                            <input type="text" asp-for="Email" id="EmailInput" class="form-control" value="@Model.Email" readonly>
                                         </div>
                                     </div>
                                     <hr>

@@ -103,7 +103,7 @@ namespace Learning_Management_System.Controllers
                                            <p class=""mb-1"">
                                                {cmt.user.UserName} <span class=""small"">{Extensions.Extensions.GetRelativeTime(cmt.CommentedAt)}</span>
                                            </p>
-                                           <a href=""#!"" id=""reply-link-id-{i}""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
+                                           <a href=""#!"" class=""link-reply-comment"" id=""reply-link-id-{i}""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
                                        </div>
                                        <p class=""small mb-0"">
                                            {cmt.StudentComment}
@@ -154,6 +154,7 @@ namespace Learning_Management_System.Controllers
 
                         i++;
                     }
+                    //ViewBag.DynamicHtml = string.Join("", commentSection);
                     return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection});
                 }
                 else
@@ -185,6 +186,7 @@ namespace Learning_Management_System.Controllers
                 CommentedAt = DateTime.Now,
                 LessonId = lessonId,
             };
+            //return RedirectToAction("GetLessonId", new { itemLessonId = lessonId });
             //_context.Add(newComment);
             //_context.SaveChanges();
             return Json(new { success = true, contentUrl = lesson.ContentUrl, chapterId = lesson.ChapterId, lessonId = lesson.LessonId });

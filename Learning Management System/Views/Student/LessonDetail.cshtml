@@ -32,9 +32,8 @@
                         //Comment
                         var receivedHtml = result.listCmtSection;
                         $('#LessonCommentSection').empty().prepend(receivedHtml);
-                        //Reply
-                        // var receivedReplies = result.listReplies;
-                        // $('CommentSecId_').append(receivedReplies);
+
+
 
                     } else {
                         console.error('Error getting Lesson ID: ' + result.errorMessage);
@@ -52,34 +51,17 @@
                 videoIframe.src = contentUrl;
             }
         }
-        // document.getElementById('changeableLink').addEventListener('click', function () {
-        //     this.style.color = '#fd7e14';
-        // });
-        //Comment//
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     var replyLink = document.querySelector(".reply-link");
-        //     var replyForm = document.querySelector(".reply-form");
-
-        //     replyLink.addEventListener("click", function (event) {
-        //         event.preventDefault();
-        //         replyForm.style.display = "block";
-        //     });
-        // });
-        document.addEventListener("DOMContentLoaded", function () {
-            var replyLinks = document.querySelectorAll('[id^="reply-link-id-"]');
-            replyLinks.forEach(function (replyLink) {
-                replyLink.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    var linkId = replyLink.id;
-                    var numberId = linkId.slice(-1);
-                    var replyForm = document.getElementById('reply-form-id-' + numberId);
-                    console.log(numberId);
-                    if (replyForm) {
-                        replyForm.style.display = "block";
-                    }
-                });
+       
+        $(document).ready(function () {
+            $('a.link-reply-comment').click(function (event) {
+                event.preventDefault();
+                var elementId = $(this).data('id');
+                var numericPart = dataIdValue.split('-')[1];
+                var numericValue = parseInt(numericPart, 10);
+                $('#reply-form-id-' + numericValue).show();
             });
         });
+        //
         $(document).ready(function () {
             function addComment() {
                 var comment = $("textarea[name='comment']").val();
@@ -93,9 +75,8 @@
                             var Id = response.chapterId;
                             var vId = response.lessonId;
                             var lessonContentUrl = response.contentUrl;
-                            updateVideo(lessonContentUrl);
                             window.location.href = '/Student/LessonDetail?chapterId=' + Id;
-                            
+                            updateVideo(lessonContentUrl);
                         } else {
                             console.error("Error adding comment: " + response.errorMessage);
                         }
@@ -163,6 +144,7 @@
                                                 <div class="row">
                                                     <div class="col" >
                                                         <div id="LessonCommentSection">
+                                                            
                                                         </div>
                                                         <!-- Comment -->
                                                         @*
