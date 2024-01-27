@@ -27,7 +27,7 @@ namespace Learning_Management_System.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
         {
-            optionsBuilder.UseMySQL("Server=localhost;port=3306;Database=lms_dbcontext;username=root;Password=123456;");
+            optionsBuilder.UseMySQL("Server=MYSQL5048.site4now.net;Database=db_aa484a_phat00;Uid=aa484a_phat00;Pwd=12345678tp");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
