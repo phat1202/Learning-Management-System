@@ -26,6 +26,7 @@ namespace Learning_Management_System.Controllers
             {
                 return View();
             }
+            ViewData["CourseId"] = courseId;
             var result = _context.Courses.Include(t => t.Teacher).Include(c => c.Category).First(c => c.CourseId == courseId);
             if (result == null)
             {
@@ -82,7 +83,11 @@ namespace Learning_Management_System.Controllers
                     EnrollmentDate = DateTime.Now,
                 };
                 _context.Add(NewEnrollments);
-                user.Role = 2;
+                if(user.Role != 3)
+                {
+                    user.Role = 2;
+
+                }
                 user.IsStudent = true;
                 _context.SaveChanges();
                 TempData.Clear();

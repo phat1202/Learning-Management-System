@@ -47,18 +47,37 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <div class="buttons d-flex my-5">
-                            <div class="block">
-                                <a asp-action="AddItemToCart" asp-controller="Cart" asp-route-courseId="@Model.CourseId" asp-route-userId="@User.Claims.First().Value" class="shadow btn custom-btn ">Add To Cart</a>
-                            </div>
-                            <div class="block">
-                                <a asp-action="Checkout" asp-controller="CourseUser" asp-route-courseId="@Model.CourseId" class="shadow btn custom-btn">Register</a>
-                            </div>
+                        using var context = new LmsDbContext();
+                        @* var student = context.Users.First(u => u.UserId == User.Claims.First().Value); *@
+                        var id = Model.CourseId;
+                        var enrolled = context.Enrollments.Any(e => e.UserId == User.Claims.First().Value && e.CourseId == id);
+                        @if (enrolled)
+                        {
+                            var enrollment = context.Enrollments.FirstOrDefault(e => e.UserId == User.Claims.First().Value && e.CourseId == id);
+                            <div class="buttons d-flex my-5">
+                                
+                                <div class="block">
+                                    <p style="color:burlywood" class="old-price mb-1">You purchased this course on @enrollment.EnrollmentDate.ToString("yyyy-MM-dd")</p>
+                                    <a style="background-color:grey" asp-action="AddItemToCart" asp-controller="Cart" asp-route-courseId="@Model.CourseId" asp-route-userId="@User.Claims.First().Value" class="shadow btn custom-btn ">Go To Course</a>
+                                </div>
 
-                            <div class="block quantity">
-                                <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="buttons d-flex my-5">
+                                <div class="block">
+                                    <a asp-action="AddItemToCart" asp-controller="Cart" asp-route-courseId="@Model.CourseId" asp-route-userId="@User.Claims.First().Value" class="shadow btn custom-btn ">Add To Cart</a>
+                                </div>
+                                <div class="block">
+                                    <a asp-action="Checkout" asp-controller="CourseUser" asp-route-courseId="@Model.CourseId" class="shadow btn custom-btn">Register</a>
+                                </div>
+
+                                <div class="block quantity">
+                                    <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
+                                </div>
+                            </div>
+                        }
                     }
                     else
                     {

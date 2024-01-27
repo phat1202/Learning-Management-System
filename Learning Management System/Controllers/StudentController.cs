@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Learning_Management_System.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Learning_Management_System.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly LmsDbContext _context;
@@ -30,7 +33,13 @@ namespace Learning_Management_System.Controllers
         }
         public IActionResult StudentCourse(int courseId)
         {
+            var userId = User.Claims.First().Value;
+            var enrolled = _context.Enrollments.Any(e => e.UserId == User.Claims.First().Value && e.CourseId == courseId);
             ViewData["CourseId"] = courseId;
+            if (!enrolled)
+            {
+                return View();
+            }
             var course = _context.Chapters.Where(c => c.course.CourseId == courseId)
                                           .Include(co => co.course)
                                           .Include(u => u.course.Teacher)
