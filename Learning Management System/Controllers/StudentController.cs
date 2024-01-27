@@ -112,14 +112,14 @@ namespace Learning_Management_System.Controllers
                                            <p class=""mb-1"">
                                                {cmt.user.UserName} <span class=""small"">{Extensions.Extensions.GetRelativeTime(cmt.CommentedAt)}</span>
                                            </p>
-                                           <a href=""#!"" class=""link-reply-comment"" id=""reply-link-id-{i}""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
+                                           <a href=""#!"" class=""link-reply-comment"" id=""cmt-{i}""><i class=""fas fa-reply fa-xs""></i><span class=""small""> reply</span></a>
                                        </div>
                                        <p class=""small mb-0"">
                                            {cmt.StudentComment}
                                        </p>
                                    </div>
                                     {string.Join("", commentReply)}
-                                    <form id=""reply-form-id-{i}"" class=""mt-3 reply-form"" style=""display: none;"">
+                                    <form id=""reply-form-cmt-{i}"" class=""mt-3 reply-form"" style=""display: none;"">
                                            <div class=""input-group mb-3"">
                                                 <textarea type=""text"" class=""form-control"" id=""newComment"" placeholder=""Reply this comment""></textarea>
                                             </div>
