@@ -117,7 +117,7 @@ namespace Learning_Management_System.Controllers
             };
             _context.Add(newChapter);
             _context.SaveChanges();
-            return View();
+            return RedirectToAction("LessonManagement", new { chapterId = newChapter.ChapterId});
         }
         //EditChapter
         public IActionResult EditChapter(int chapterId)
@@ -143,14 +143,14 @@ namespace Learning_Management_System.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateNewLesson(Lesson lesson, IFormFile Video)
         {
-            var uploadVideo = new FileUpLoading();
-            var uploaded = uploadVideo.UploadVideo(Video);
-            var chapterId = (int)TempData["ChapterId"];
+           var chapterId = (int)TempData["ChapterId"];
             var chapter = _context.Chapters.First(c => c.ChapterId == chapterId);
             if (chapter == null)
             {
                 return View();
             }
+            var uploadVideo = new FileUpLoading();
+            var uploaded = uploadVideo.UploadVideo(Video);
             var newLesson = new Lesson
             {
                 ChapterId = chapterId,
