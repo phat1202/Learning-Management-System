@@ -24,10 +24,22 @@
                         </div>
                         <span class="alert-danger">@Html.ValidationSummary()</span>
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <button type="submit" class="btn btn-primary">Finish</button>
+                        <button type="submit" onclick="myFunc()" class="btn btn-primary">Finish</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div id="loading" style="display:none;">
+    <div id="loading-modal">
+        <p>Uploading Video.</p>
+        <span class="loader"></span>
+    </div>
+</div>
+
+<script>
+    function myFunc() {
+        $('#loading').show();
+    }
+</script>

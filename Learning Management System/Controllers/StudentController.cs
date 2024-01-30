@@ -164,7 +164,7 @@ namespace Learning_Management_System.Controllers
                         i++;
                     }
                     //ViewBag.DynamicHtml = string.Join("", commentSection);
-                    return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection});
+                    return Json(new { success = true, contentUrl = lesson.ContentUrl, listCmtSection = commentSection, durationTime =lesson.TimeDuration});
                 }
                 else
                 {

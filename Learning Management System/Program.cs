@@ -19,7 +19,7 @@ builder.Services.AddAuthentication(options =>
     options.LoginPath = "/User/Login";
     options.LogoutPath = "/User/Logout";
     options.AccessDeniedPath = "/User/AccessDenied";
-    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    options.ExpireTimeSpan = TimeSpan.FromDays(2);
 });
 
 builder.Services.AddSession(options =>

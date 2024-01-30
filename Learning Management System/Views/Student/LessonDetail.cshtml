@@ -20,7 +20,6 @@
                     if (result.success) {
                         var lessonContentUrl = result.contentUrl;
                         updateVideo(lessonContentUrl);
-
                         //Doi Mau
                         var targets = document.querySelectorAll('[id^="changecolorLesson_"]');
                         targets.forEach(function (target) {
@@ -28,12 +27,13 @@
                         });
                         var linkId = 'changecolorLesson_' + itemLessonId;
                         var link = document.getElementById(linkId);
-                        link.style.color = '#fd7e14'; //Cam
+                        link.style.color = '#fd7e14'; //Mau Cam
                         //Comment
                         var receivedHtml = result.listCmtSection;
                         $('#LessonCommentSection').empty().prepend(receivedHtml);
-
-
+                        //
+                        // var time = result.timeDuration;
+                        // progressTracking(time, itemLessonId);
 
                     } else {
                         console.error('Error getting Lesson ID: ' + result.errorMessage);
@@ -44,27 +44,28 @@
                 }
             });
         }
-
+        //
+        function progressTracking(timeDuration, lessonId) {
+            var videoLesson = document.querySelector('iframe');
+            //var checkbox = $('[id^="trackProgress_' + lessonId + '"]');
+            var checkbox = $('#trackProgress_2');
+            var videoTime = videoLesson.video.getCurrentTime();
+            var requiredDuration = timeDuration * 0.9;
+            if (checkbox) {
+                checkbox.prop('checked', true);
+            }
+        }
+        //
         function updateVideo(contentUrl) {
             var videoIframe = document.getElementById('videoIframe');
             if (videoIframe) {
                 videoIframe.src = contentUrl;
             }
         }
-
-        // $(document).ready(function () {
-        //     $('a.link-reply-comment').click(function (event) {
-        //         event.preventDefault();
-        //         var elementId = $(this).data('id');
-        //         var numericPart = dataIdValue.split('-')[1];
-        //         var numericValue = parseInt(numericPart, 10);
-        //         $('#reply-form-id-' + numericValue).show();
-        //     });
-        // });
         $(document).ready(function () {
             $(".link-reply-comment").click(function (e) {
                 e.preventDefault();
-                var idCmt = e.Id;   
+                var idCmt = e.Id;
                 $('[id^="reply-form-"]').show();
             });
         });
@@ -121,7 +122,7 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
 
                                         <a href="javascript:void(0);" onclick="getLessonId(@item.LessonId)" id="changecolorLesson_@item.LessonId" class="text-decoration-none h6 m-0">@number. @item.LessonName</a>
-                                        <input class="shop-tooltip close float-none text-danger" type="checkbox" checked disabled />
+                                        <input class="shop-tooltip close float-none text-danger" id="trackProgress_@item.LessonId" type="checkbox" unchecked />
                                     </li>
                                     lessonId = item.LessonId;
                                 }
@@ -180,29 +181,29 @@
 
                                                             </div>
                                                         </div>
-@* 
-                                                        <!-- Reply -->
-                                                        <div class="d-flex flex-start mt-4">
-                                                            <a class="me-3" href="#">
-                                                                <img class="rounded-circle shadow-1-strong"
-                                                                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
-                                                                     width="65" height="65" />
-                                                            </a>
-                                                            <div class="flex-grow-1 flex-shrink-1">
-                                                                <div>
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <p class="mb-1">
-                                                                            Simona Disa <span class="small">- 3 hours ago</span>
-                                                                        </p>
-                                                                    </div>
-                                                                    <p class="small mb-0">
-                                                                        letters, as opposed to using 'Content here, content here',
-                                                                        making it look like readable English.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Reply --> *@
+                                                        @*
+                                                    <!-- Reply -->
+                                                    <div class="d-flex flex-start mt-4">
+                                                    <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp" alt="avatar"
+                                                    width="65" height="65" />
+                                                    </a>
+                                                    <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                    Simona Disa <span class="small">- 3 hours ago</span>
+                                                    </p>
+                                                    </div>
+                                                    <p class="small mb-0">
+                                                    letters, as opposed to using 'Content here, content here',
+                                                    making it look like readable English.
+                                                    </p>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    <!-- Reply --> *@
                                                         <!-- Input for reply comment -->
                                                         <!-- Input for new comment -->
 
