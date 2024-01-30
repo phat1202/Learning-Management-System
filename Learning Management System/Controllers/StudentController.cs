@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Learning_Management_System.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Learning_Management_System.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly LmsDbContext _context;

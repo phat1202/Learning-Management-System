@@ -2,7 +2,7 @@
 @model List<Learning_Management_System.Models.Lesson>
 @inject LmsDbContext db;
 @{
-    int? lessonId = 1;
+    int? lessonId = 0;
     int? number = 0;
     int? selected = 0;
 }
@@ -94,6 +94,7 @@
     </script>
     @if (Model != null)
     {
+        lessonId = Model.First().LessonId;
         var lesson = db.Lessons.Include(c => c.chapter).Include(c => c.chapter.course).FirstOrDefault(l => l.LessonId == lessonId);
         var courseId = lesson.chapter.course.CourseId;
         var comments = db.CommentLessons.Where(c => c.LessonId == lessonId).ToList();
