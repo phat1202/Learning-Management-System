@@ -1,3 +1,4 @@
+using Learning_Management_System.Extensions;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidCastException("Not");
 builder.Services.AddDbContext<LmsDbContext>(options => options.UseMySQL(connectionString));
-
+builder.Services.AddTransient<StatisticsService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;

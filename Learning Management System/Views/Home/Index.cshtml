@@ -1,7 +1,8 @@
-﻿@inject LmsDbContext _context
+﻿@using Learning_Management_System.Extensions
+@inject StatisticsService statService
 @{
-    var courses_list = _context.Courses.ToList();
-    var teachers_list = _context.Users.Where(u => u.IsTeacher == true).ToList();
+    var courses_list = statService.GetCourse();
+    var teachers_list = statService.GetTecher();
 }
 <div class="container-fluid p-0 pb-5 mb-5">
     <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
@@ -158,8 +159,8 @@
         <div class="row">
             @foreach (var item in courses_list)
             {
-                var NumberStudents = _context.Enrollments.Count(student => student.CourseId == item.CourseId);
-                var teachers = _context.Users.FirstOrDefault(u => u.UserId == item.TeacherId).UserName;
+                var NumberStudents = statService.GetNumberOfEnrollment(item);
+                var teachers = statService.GetTeacherName(item);
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="rounded overflow-hidden mb-2">
                         <img id="img-course" src="@item.ImageCover" alt="">

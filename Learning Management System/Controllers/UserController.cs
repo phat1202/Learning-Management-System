@@ -7,7 +7,6 @@ using Learning_Management_System.Repositories.AccountRepository;
 using Learning_Management_System.Extensions;
 using Learning_Management_System.Models;
 using Microsoft.AspNetCore.Identity;
-using Learning_Management_System.EndUserModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Security.Principal;
 using System.Linq;
